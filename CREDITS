@@ -1,0 +1,37 @@
+As MuninLite has close bounds to munin-node code, some of the plugin
+code is borrowed from the Linux plugins. As most of the code checkins
+are done by previous Munin maintainer, Jimmy Olsen <jimmyo@linpro.no>,
+some credits might be missing.
+
+MuninLite hearby credits the following people for their contribution
+to Munin or MuninLite
+
+Jimmy Olsen <jimmyo@linpro.no>
+ - df plugin in Munin
+ - cpu plugin in  Munin
+ - if_ and if_err_ plugin in Munin
+ - load plugin in Munin
+ - memory plugin in Munin
+ - processes plugin in Munin
+ - interupts plugin in Munin
+ 
+Mike Fedyk <mfedyk@mikefedyk.com>
+ - memory plugin in Munin
+ - context switch graphing in interupts plugin in Munin
+ 
+Nicolas Salles <mosan@users.sourceforge.net>
+ - uptime plugin in Munin
+
+Ragnar Wisløff
+ - Idea and base for interupts plugin in Munin
+
+Dagfinn Ilmari Mannsåker <ilmari@users.sourceforge.net>
+ - irqstats plugin in Munin
+
+Kai Ove Gran <kaiove@humla.no>
+ - Help regarding available features in busybox in floppyfw
+ - Build script (muninlite.mk) for floppyfw devkit
+   (http://pong.no/floppyfw/muninlite/)
+ - post ini script (post-muninlite.ini) for floppyfw 
+   (http://pong.no/floppyfw/muninlite/)
+ 

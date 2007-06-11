@@ -1,0 +1,24 @@
+config_df() {
+  echo "graph_title Filesystem usage (in %)
+graph_args --upper-limit 100 -l 0
+graph_vlabel %
+graph_category disk
+graph_info This graph shows disk usage on the machine."
+  for PART in $(df | grep '\/[a-z0-9]*$' | sed 's/ \{1,\}/ /g;' | cut -d\  -f6)
+  do
+    PINFO=$(df $PART | tail -1);
+    PNAME=$(echo $PINFO | cut -d\  -f1 | sed 's/\//_/g')
+    echo "$PNAME.label $PART"
+    echo "$PNAME.info $PNAME -> $PART"
+    echo "$PNAME.warning 92"
+    echo "$PNAME.critical 98"
+  done
+}
+fetch_df() {
+  for PART in $(df | grep '\/[a-z0-9]*$' | sed 's/ \{1,\}/ /g;' | cut -d\  -f6)
+  do
+    PINFO=$(df $PART | tail -1);
+    PNAME=$(echo $PINFO | cut -d\  -f1 | sed 's/\//_/g')
+    echo "$PNAME.value" $(echo $PINFO | cut -f5 -d\  | sed -e 's/\%//g')
+  done
+}

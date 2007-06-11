@@ -1,0 +1,83 @@
+config_cpu() {
+  extinfo=""
+  if grep '^cpu \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\}' /proc/stat >/dev/null 2>&1; then
+    extinfo="iowait irq softirq"
+  fi
+  NCPU=$(($(grep '^cpu. ' /proc/stat | wc -l) - 1))
+  PERCENT=$(($NCPU * 100))
+  graphlimit=$PERCENT
+  SYSWARNING=$(($PERCENT * 30 / 100))
+  SYSCRITICAL=$(($PERCENT * 50 / 100))
+  USRWARNING=$(($PERCENT * 80 / 100))
+  echo "graph_title CPU usage"
+  echo "graph_order system user nice idle" $extinfo
+  echo "graph_args --base 1000 -r --lower-limit 0 --upper-limit $graphlimit"
+  echo "graph_vlabel %"
+  echo "graph_scale no"
+  echo "graph_info This graph shows how CPU time is spent."
+  echo "graph_category system"
+  echo "graph_period second"
+  echo "system.label system"
+  echo "system.draw AREA"
+  echo "system.max 5000"
+  echo "system.min 0"
+  echo "system.type DERIVE"
+  echo "system.warning $SYSWARNING"
+  echo "system.critical $SYSCRITICAL"
+  echo "system.info CPU time spent by the kernel in system activities"
+  echo "user.label user"
+  echo "user.draw STACK"
+  echo "user.min 0"
+  echo "user.max 5000"
+  echo "user.warning $USRWARNING"
+  echo "user.type DERIVE"
+  echo "user.info CPU time spent by normal programs and daemons"
+  echo "nice.label nice"
+  echo "nice.draw STACK"
+  echo "nice.min 0"
+  echo "nice.max 5000"
+  echo "nice.type DERIVE"
+  echo "nice.info CPU time spent by nice(1)d programs"
+  echo "idle.label idle"
+  echo "idle.draw STACK"
+  echo "idle.min 0"
+  echo "idle.max 5000"
+  echo "idle.type DERIVE"
+  echo "idle.info Idle CPU time"
+  if [ ! -z "$extinfo" ]; then
+    echo "iowait.label iowait"
+    echo "iowait.draw STACK"
+    echo "iowait.min 0"
+    echo "iowait.max 5000"
+    echo "iowait.type DERIVE"
+    echo "iowait.info CPU time spent waiting for I/O operations to finish"
+    echo "irq.label irq"
+    echo "irq.draw STACK"
+    echo "irq.min 0"
+    echo "irq.max 5000"
+    echo "irq.type DERIVE"
+    echo "irq.info CPU time spent handling interrupts"
+    echo "softirq.label softirq"
+    echo "softirq.draw STACK"
+    echo "softirq.min 0"
+    echo "softirq.max 5000"
+    echo "softirq.type DERIVE"
+    echo "softirq.info CPU time spent handling "batched" interrupts"
+  fi
+}
+fetch_cpu() {
+  extinfo=""
+  if grep '^cpu \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\}' /proc/stat >/dev/null 2>&1; then
+    extinfo="iowait irq softirq"
+  fi
+  CINFO=$(grep '^cpu ' /proc/stat | cut -c6-)
+  echo "user.value" $(echo "$CINFO" | cut -d\  -f1)
+  echo "nice.value" $(echo "$CINFO" | cut -d\  -f2)
+  echo "system.value" $(echo "$CINFO" | cut -d\  -f3)
+  echo "idle.value" $(echo "$CINFO" | cut -d\  -f4)
+  if [ ! -z "$extinfo" ]; then
+    echo "iowait.value" $(echo "$CINFO" | cut -d\  -f5)
+    echo "irq.value" $(echo "$CINFO" | cut -d\  -f6)
+    echo "softirq.value" $(echo "$CINFO" | cut -d\  -f7)
+  fi
+}

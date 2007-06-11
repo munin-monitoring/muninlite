@@ -1,0 +1,34 @@
+muninlite
+
+Changelog:
+
+0.9.14 - 0.9.15
+
+Date: 
+
+  - Some documentations added
+  
+  
+0.9.13 - 0.9.14
+
+Date: 2007-06-10
+
+  - Plugins as separate files
+  - Makefile (make smaller munin-node for systems with less plugins)
+
+0.9.12 - 0.9.13
+
+Date: 2007-06-10
+
+  - Fixed spikes (hopefully) in if_ and if_err_
+  - Fixed missing output due to parsed $ in variables in multiple plugins
+  
+  
+0 - 0.9.12
+
+Date: 2007-06-08
+
+  - First Changelog
+  - Initial "release"
+  
+  
