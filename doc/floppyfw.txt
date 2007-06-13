@@ -1,0 +1,63 @@
+How to make busybox with inetd
+------------------------------
+Some version numbers might be different, but the steps should be valid
+anyway.
+
+Get a copy of the floppyfw devkit:
+# http://www.zelow.no/floppyfw/trac/wiki/TheDevkit
+
+Follow the reamde to get a svn check out of the source.
+# svn co http://www.zelow.no/svn/floppyfw-3.0 
+
+Do a build to get all needed source:
+# make
+
+Modify busybox:
+
+# cd build_i386/busybox-1.2.2.1
+# make menuconfig
+  (Locate Networkind Utilities and you will find inetd. You might want
+   to disable the support for internal inetd services to save some
+   space)
+   
+# cp .config ../../config/config-busybox-1.2.2.1
+
+
+Restart your build:
+
+# make clean
+# make
+# make floppy 
+# make floppyimage
+
+To add the muninlite package, you should download muninlite.mk.txt and
+post-muninlite.ini.txt from http://pong.no/floppyfw/muninlite/.
+
+Rename muninlite.mk.txt to muninlite.mk and place in the makefile
+directory. post-muninlite.ini.txt should be renamed to
+post-muninlite.ini and placed in the packages directory. 
+
+You should then be able to build the package:
+
+# make muninlite
+
+Mount your floppyfw image and copy the package and ini file:
+
+# mount -t vfat -o loop floppyfw.img /mnt
+# cp packages/muninlite.ffw packages/post-muninlite.ini /mnt/packages/
+# umount /mnt
+
+You might want to add other packages like nanotop and e3 as well, and
+make some changes to the firewall rules while you have the image
+mounted, but that is out of the scope of this how to.
+
+Transfer your image to a floppy and boot your firewall.
+
+If it works, you will see these messages during boot:
+
+  Looking for post- scripts...
+  /mnt/tmp/packages/post-muninlite.ini stripped
+  /mnt/tmp/packages/post-muninlite.ini chmoded
+  Running /etc/post-muninlite.ini
+  Starting inetd.
+
