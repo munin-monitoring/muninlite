@@ -6,52 +6,40 @@ anyway.
 Get a copy of the floppyfw devkit:
 # http://www.zelow.no/floppyfw/trac/wiki/TheDevkit
 
-Follow the reamde to get a svn check out of the source.
+Follow the readme to get a svn check out of the source.
+For the stable 3.0 series, the command is as follows:
 # svn co http://www.zelow.no/svn/floppyfw-3.0 
 
-Do a build to get all needed source:
-# make
+Edit the BusyBox config with your favourite editor. It's located at
+/floppyfw-3.0/configs/config-busybox-1.2.2.1
 
-Modify busybox:
+Change the line "# CONFIG_INETD is not set" to "CONFIG_INETD=y".
 
-# cd build_i386/busybox-1.2.2.1
-# make menuconfig
-  (Locate Networkind Utilities and you will find inetd. You might want
-   to disable the support for internal inetd services to save some
-   space)
-   
-# cp .config ../../config/config-busybox-1.2.2.1
-
-
-Restart your build:
-
-# make clean
-# make
-# make floppy 
-# make floppyimage
-
-To add the muninlite package, you should download muninlite.mk.txt and
-post-muninlite.ini.txt from http://pong.no/floppyfw/muninlite/.
+To add the muninlite package, you should download muninlite.mk.txt from
+http://pong.no/floppyfw/muninlite/.
 
 Rename muninlite.mk.txt to muninlite.mk and place in the makefile
-directory. post-muninlite.ini.txt should be renamed to
-post-muninlite.ini and placed in the packages directory. 
+directory.
 
-You should then be able to build the package:
+Then build your own version of floppyfw:
+# cd /floppyfw-3.0; make
 
-# make muninlite
+If you want additional packages, copy the .ffw-files from the
+/floppyfw-3.0/build_i386/ directory to the /floppyfw-3.0/floppy/packages
+directory.
 
-Mount your floppyfw image and copy the package and ini file:
+Download post-muninlite.ini.txt from http://pong.no/floppyfw/muninlite/
+to the /floppyfw-3.0/floppy/packages directory and rename it to 
+post-muninlite.ini.
 
-# mount -t vfat -o loop floppyfw.img /mnt
-# cp packages/muninlite.ffw packages/post-muninlite.ini /mnt/packages/
-# umount /mnt
+Make the floppy-image:
+# cd /floppyfw-3.0; make floppyimage
 
-You might want to add other packages like nanotop and e3 as well, and
-make some changes to the firewall rules while you have the image
-mounted, but that is out of the scope of this how to.
+You now have a floppy image with muninlite installed and configured.
+Transfer the image to a floppy and make your customizations to the
+config and floppyfw.ini files (if any are needed).
 
-Transfer your image to a floppy and boot your firewall.
+Boot your firewall.
 
 If it works, you will see these messages during boot:
 
