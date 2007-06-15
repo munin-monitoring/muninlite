@@ -3,7 +3,7 @@
 PLUGINS=df cpu if_ if_err_ load memory processes swap netstat uptime interrupts irqstats
 #PLUGINS=cpu if_ if_err_ load memory processes netstat uptime interrupts irqstats
 
-munin-node:
+munin-node: plugins/*
 	@VERSION=$$(cat VERSION); \
 	echo "Making munin-node for muninlite version $$VERSION"; \
 	PLSTR=""; \
