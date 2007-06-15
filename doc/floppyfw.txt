@@ -21,6 +21,9 @@ http://pong.no/floppyfw/muninlite/.
 Rename muninlite.mk.txt to muninlite.mk and place in the makefile
 directory.
 
+Edit /floppyfw-3.0/Makefile. Find all the TARGETS and add
+"TARGETS+=muninlite" next to them.
+
 Then build your own version of floppyfw:
 # cd /floppyfw-3.0; make
 
