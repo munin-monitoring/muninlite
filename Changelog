@@ -2,12 +2,18 @@ muninlite
 
 Changelog:
 
+0.9.15 - 
+
+Date:
+
+  - 
+
 0.9.14 - 0.9.15
 
-Date: 
+Date: 2007-06-15
 
   - Some documentations added
-  
+  - SF#1736919 - Spike in if_ plugin hopefully fixed
   
 0.9.13 - 0.9.14
 
