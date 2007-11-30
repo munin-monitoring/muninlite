@@ -4,8 +4,7 @@ config_netstat() {
   echo "graph_vlabel active connections"
   echo "graph_category network"
   echo "graph_period second"
-  echo "graph_info This graph shows the TCP activity of all the network interfac
-es combined."
+  echo "graph_info This graph shows the TCP activity of all the network interfaces combined."
   echo "active.label active"
   echo "active.type DERIVE"
   echo "active.max 50000"
