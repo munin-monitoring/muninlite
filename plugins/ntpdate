@@ -1,0 +1,21 @@
+config_ntpdate() {
+  echo "graph_title NTP offset and dealy to peer $NTP_PEER"
+  echo "graph_args --base 1000 --vertical-label msec"
+  echo "offset.label Offset"
+  echo "offset.draw LINE2"
+  echo "delay.label Delay"
+  echo "delay.draw LINE2"
+}
+
+fetch_ntpdate() {
+  NTPDATE="/usr/sbin/ntpdate"
+  DATA=(0 0)
+  if [ "$NTP_PEER" != "" ]; then
+    if [ -x "$NTPDATE" ]; then
+      DATA=($($NTPDATE -q $NTP_PEER | awk '/^server.*offset/{gsub(/,/,"");printf "%s %s", ($6*1000), ($8*1000);}'))
+    fi
+  fi
+  echo "offset.value "${DATA[0]}
+  echo "delay.value "${DATA[1]}
+}
+
