@@ -68,14 +68,14 @@ RES=""
 for PLUG in $PLUGINS
 do 
   if [ "$PLUG" = "if_" ]; then  
-    for INTER in $(grep '^ *\(eth\|wlan\|ath\|ra\)[0-9]\{1,\}:' /proc/net/dev | cut -f1 -d: | sed 's/ //g');
+    for INTER in $(grep '^ *\(ppp\|eth\|wlan\|ath\|ra\)[0-9]\{1,\}:' /proc/net/dev | cut -f1 -d: | sed 's/ //g');
     do
       RES="$RES if_$INTER"
       eval "fetch_if_${INTER}() { fetch_if $INTER $@; };"
       eval "config_if_${INTER}() { config_if $INTER $@; };"
     done
   elif [ "$PLUG" = "if_err_" ]; then
-    for INTER in $(grep '^ *\(eth\|wlan\|ath\|ra\)[0-9]\{1,\}:' /proc/net/dev | cut -f1 -d: | sed 's/ //g');
+    for INTER in $(grep '^ *\(ppp\|eth\|wlan\|ath\|ra\)[0-9]\{1,\}:' /proc/net/dev | cut -f1 -d: | sed 's/ //g');
     do
       RES="$RES if_err_$INTER"
       eval "fetch_if_err_${INTER}() { fetch_if_err $INTER $@; };"
