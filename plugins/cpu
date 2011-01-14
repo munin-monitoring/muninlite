@@ -4,6 +4,7 @@ config_cpu() {
     extinfo="iowait irq softirq"
   fi
   NCPU=$(($(grep '^cpu. ' /proc/stat | wc -l) - 1))
+  if [ $NCPU = 0 ]; then NCPU=1; fi
   PERCENT=$(($NCPU * 100))
   graphlimit=$PERCENT
   SYSWARNING=$(($PERCENT * 30 / 100))
