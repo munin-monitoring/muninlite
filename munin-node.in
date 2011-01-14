@@ -5,7 +5,7 @@
 #
 # For latest version, see http://muninlite.sf.net/
 #
-# Copyright (c) 2007 Rune Nordbøe Skillingstad <rune@skillingstad.no>
+# Copyright (c) 2007-2011 Rune Nordbøe Skillingstad <rune@skillingstad.no>
 # 
 # Licensed under GPLv2 (see LICENSE file for full License)
 #
@@ -15,6 +15,10 @@
 VERSION="@@VERSION@@"
 
 @@CONF@@
+
+# if plugindir_ is present in $PLUGINS,
+# iexecutables (scripts, binaries) matching the following pattern will be scanned and operated as plugins
+PLUGINPATTERN=$(dirname $0)"/munin-node-plugin.d/*"
 
 # Remove unwanted plugins from this list
 PLUGINS="@@PLUGINS@@"
@@ -85,6 +89,20 @@ do
     if netstat -s >/dev/null 2>&1; then
       RES="$RES netstat"
     fi
+  elif [ "$PLUG" = "plugindir_" ]; then
+    for MYPLUGIN in $(ls -1 $PLUGINPATTERN 2>/dev/null );
+    do
+      if [ -f $MYPLUGIN -a -x $MYPLUGIN ]; then
+        MYPLUGINNAME=$(basename $MYPLUGIN)
+        #ensure we don't have name collision
+        if echo "$RES" | grep "\b$MYPLUGINNAME\b" >/dev/null 2>&1 ; then
+          MYPLUGINNAME="plugindir_$MYPLUGINNAME"
+        fi
+        RES="$RES $MYPLUGINNAME"
+        eval "fetch_${MYPLUGINNAME}() { $MYPLUGIN ; };"
+        eval "config_${MYPLUGINNAME}() { $MYPLUGIN config ; };"
+      fi
+    done
   else
     RES="$RES $PLUG";
   fi
