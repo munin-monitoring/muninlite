@@ -1,3 +1,25 @@
+2011-01-14 20:28  runesk
+
+	* VERSION: New Release: Added patch from Jozsef Marton
+
+2011-01-14 20:27  runesk
+
+	* Makefile: Added plugindir_ as a default plugin
+
+2011-01-14 20:25  runesk
+
+	* plugins/plugindir_: Build need this empty file
+
+2011-01-14 20:24  runesk
+
+	* munin-node.in: Accepted patch from Jozsef Marton. Plugins might
+	  now be added
+	  dynamicly using the plugindir_
+
+2009-03-17 12:42  runesk
+
+	* Changelog:
+
 2009-03-17 12:38  runesk
 
 	* VERSION: New release
