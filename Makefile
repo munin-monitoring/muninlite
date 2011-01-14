@@ -1,6 +1,6 @@
 
 
-PLUGINS=df cpu if_ if_err_ load memory processes swap netstat uptime interrupts irqstats ntpdate
+PLUGINS=df cpu if_ if_err_ load memory processes swap netstat uptime interrupts irqstats ntpdate plugindir_
 #PLUGINS=cpu if_ if_err_ load memory processes netstat uptime interrupts irqstats
 
 munin-node: plugins/* munin-node.conf
