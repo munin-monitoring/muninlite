@@ -9,13 +9,16 @@ config_ntpdate() {
 
 fetch_ntpdate() {
   NTPDATE="/usr/sbin/ntpdate"
-  DATA=(0 0)
-  if [ "$NTP_PEER" != "" ]; then
-    if [ -x "$NTPDATE" ]; then
-      DATA=($($NTPDATE -q $NTP_PEER | awk '/^server.*offset/{gsub(/,/,"");printf "%s %s", ($6*1000), ($8*1000);}'))
+  OFFSET=0
+  DELAY=0
+  if [ "$NTP_PEER" != "" ]; then 
+    if [ -x "$NTPDATE" ]; then 
+      DATA=$($NTPDATE -q $NTP_PEER | awk '/^server.*offset/{gsub(/,/,"");printf "%s %s", ($6*1000), ($8*1000);}')
+      OFFSET=$(echo "$DATA" | cut -d\  -f1)
+      DELAY=$(echo "$DATA" | cut -d\  -f2)
     fi
   fi
-  echo "offset.value "${DATA[0]}
-  echo "delay.value "${DATA[1]}
+  echo "offset.value $OFFSET"
+  echo "delay.value $DELAY"
 }
 
