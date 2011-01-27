@@ -42,6 +42,7 @@ tgz: clean-node
 	mkdir -p releases; \
 	cp -ra . releases/muninlite-$$VERSION 2>/dev/null || true; \
 	cd releases; \
-	rm -rf  muninlite-$$VERSION/releases; \
+	rm -rf muninlite-$$VERSION/releases; \
+	rm -rf muninlite-$$VERSION/.svn; \
 	tar zcvf muninlite-$$VERSION.tar.gz muninlite-$$VERSION >/dev/null; \
 	rm -rf  muninlite-$$VERSION;
