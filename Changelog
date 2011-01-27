@@ -1,3 +1,35 @@
+2011-01-27 10:06  runesk
+
+	* VERSION: Release VERSION 1.0.4
+
+2011-01-27 10:03  runesk
+
+	* munin-node.conf: Forget the previous change
+
+2011-01-27 10:02  runesk
+
+	* munin-node.in: Added ipsec to monitored interfaces - Thanks to
+	  Tamas TEVESZ
+	  Added VLANs to monitored interfaces - Patch from Christophe
+	  GUILLOUX (#3162054)
+
+2011-01-27 09:58  runesk
+
+	* plugins/ntpdate: Arrays is a bashismn
+
+2011-01-27 09:56  runesk
+
+	* munin-node.conf: $HOSTNAME seems to be a bashism
+
+2011-01-14 20:52  runesk
+
+	* plugins/cpu: Keith Taylor submitted a patch to support older
+	  kernels ID: 2716990
+
+2011-01-14 20:39  runesk
+
+	* CREDITS, Changelog: Forgot these
+
 2011-01-14 20:28  runesk
 
 	* VERSION: New Release: Added patch from Jozsef Marton
