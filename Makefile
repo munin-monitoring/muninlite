@@ -4,20 +4,21 @@ PLUGINS=df cpu if_ if_err_ load memory processes swap netstat uptime interrupts 
 #PLUGINS=cpu if_ if_err_ load memory processes netstat uptime interrupts irqstats
 
 munin-node: plugins/* munin-node.conf
-	@VERSION=$$(cat VERSION); \
-	CONF=$$(grep -v '^#' munin-node.conf); \
+	@export VERSION=$$(cat VERSION); \
+	export CONF=$$(grep -v '^#' munin-node.conf); \
+	export "PLUGINS=$(PLUGINS)"; \
 	echo "Making munin-node for muninlite version $$VERSION"; \
-	PLSTR=""; \
-	for PLGIN in $(PLUGINS); \
+	export PLSTR=""; \
+	for PLGIN in $$PLUGINS; \
 	do \
 	  echo "Adding plugin $$PLGIN"; \
-	  PLSTR=$$(echo "$$PLSTR"; grep -v '^#' plugins/$$PLGIN); \
+	  PLSTR=$$(printf "%s\n" "$$PLSTR"; grep -v '^#' plugins/$$PLGIN); \
 	done; \
-	PLSTR=$$(echo "$$PLSTR" | sed -e 's/\\/\\\\/g' \
-		      	            -e 's/\//\\\//g' \
-				    -e 's/\$$/\\$$/g'); \
-	perl -p -e \
-	  "s/\@\@VERSION\@\@/$$VERSION/;s/\@\@CONF\@\@/$$CONF/;s/\@\@PLUGINS\@\@/$(PLUGINS)/;s/\@\@PLSTR\@\@/$$PLSTR/;" \
+	perl -p -e '\
+	    s/\@\@VERSION\@\@/$$ENV{"VERSION"}/; \
+	    s/\@\@CONF\@\@/$$ENV{"CONF"}/; \
+	    s/\@\@PLUGINS\@\@/$$ENV{"PLUGINS"}/; \
+	    s/\@\@PLSTR\@\@/$$ENV{"PLSTR"}/;' \
 	  munin-node.in > munin-node
 	@chmod +x munin-node
 
