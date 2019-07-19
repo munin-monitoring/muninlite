@@ -26,7 +26,7 @@ config_if() {
   fi
 }
 fetch_if() {
-  IINFO=$(grep "$1:" /proc/net/dev | cut -d: -f2 | sed -e 's/  / /g')
+  IINFO=$(grep "$1:" /proc/net/dev | cut -d: -f2 | sed -e 's/  */ /g' -e 's/^[ \t]*//')
   echo "down.value" $(echo $IINFO | cut -d\  -f1)
   echo "up.value" $(echo $IINFO | cut -d\  -f9)
 }
