@@ -22,8 +22,9 @@ $(TARGET_FILE): plugins/* $(CONFIGURATION_FILE)
 	    s/\@\@CONF\@\@/$$ENV{"CONF"}/; \
 	    s/\@\@PLUGINS\@\@/$$ENV{"PLUGINS"}/; \
 	    s/\@\@PLSTR\@\@/$$ENV{"PLSTR"}/;' \
-	  munin-node.in >"$(TARGET_FILE)"
-	@chmod +x "$(TARGET_FILE)"
+	  munin-node.in >"$(TARGET_FILE).tmp"
+	@chmod +x "$(TARGET_FILE).tmp"
+	@mv "$(TARGET_FILE).tmp" "$(TARGET_FILE)"
 
 all: $(TARGET_FILE)
 
