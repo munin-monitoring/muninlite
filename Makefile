@@ -58,12 +58,7 @@ clean-all: clean-node clean-tgz
 tgz: $(TGZ_FILE)
 
 $(TGZ_FILE):
-	@VERSION="$(VERSION)"; \
-	echo "Building "$(DIST_DIR)"/muninlite-$$VERSION.tar.gz"; \
-	mkdir -p "$(DIST_DIR)"; \
-	cp -ra . "$(DIST_DIR)"/muninlite-$$VERSION 2>/dev/null || true; \
-	cd "$(DIST_DIR)"; \
-	rm -rf muninlite-$$VERSION/"$(DIST_DIR)"; \
-	rm -rf muninlite-$$VERSION/.svn; \
-	tar zcvf muninlite-$$VERSION.tar.gz muninlite-$$VERSION >/dev/null; \
-	rm -rf  muninlite-$$VERSION;
+	@echo "Building $@ ..."
+	@mkdir -p "$(dir $(@))"
+	git archive --prefix=muninlite-$(VERSION)/ --format=tar --output "$@.tmp" HEAD
+	mv "$@.tmp" "$@"
