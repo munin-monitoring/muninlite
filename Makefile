@@ -1,7 +1,5 @@
+PLUGINS = df cpu if_ if_err_ load memory processes swap netstat uptime interrupts irqstats ntpdate plugindir_
 
-
-PLUGINS=df cpu if_ if_err_ load memory processes swap netstat uptime interrupts irqstats ntpdate plugindir_
-#PLUGINS=cpu if_ if_err_ load memory processes netstat uptime interrupts irqstats
 
 munin-node: plugins/* munin-node.conf
 	@export VERSION=$$(cat VERSION); \
@@ -22,19 +20,18 @@ munin-node: plugins/* munin-node.conf
 	  munin-node.in > munin-node
 	@chmod +x munin-node
 
-	
 all: munin-node
-     
+
 clean-node:
 	@echo "Removing munin-node"
 	@rm -f munin-node
 
-clean-tgz: 
-	@echo "Old releases"
+clean-tgz:
+	@echo "Removing old releases"
 	@rm -rf releases
 
 clean: clean-node
-	
+
 clean-all: clean-node clean-tgz
 
 tgz: clean-node
