@@ -33,6 +33,7 @@ help:
 	@$(info   clean       - remove assembled 'TARGET_FILE' ($(TARGET_FILE)))
 	@$(info   clean-all   - remove old releases from 'DIST_DIR' ($(DIST_DIR)))
 	@$(info   help        - show this overview)
+	@$(info   lint        - code style checks)
 	@$(info   tgz         - create release archive)
 
 .PHONY: all
@@ -62,3 +63,7 @@ $(TGZ_FILE):
 	@mkdir -p "$(dir $(@))"
 	git archive --prefix=muninlite-$(VERSION)/ --format=tar --output "$@.tmp" HEAD
 	mv "$@.tmp" "$@"
+
+.PHONY: lint
+lint:
+	shellcheck -s dash --exclude=SC2230 $(PLUGIN_FILES) "$(INPUT_FILE)"
