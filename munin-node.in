@@ -9,8 +9,6 @@
 #
 # Licensed under GPLv2 (see LICENSE file for full License)
 #
-# $Id: $
-#
 
 VERSION="@@VERSION@@"
 
