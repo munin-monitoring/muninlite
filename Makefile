@@ -26,20 +26,26 @@ $(TARGET_FILE): plugins/* $(CONFIGURATION_FILE)
 	@chmod +x "$(TARGET_FILE).tmp"
 	@mv "$(TARGET_FILE).tmp" "$(TARGET_FILE)"
 
+.PHONY: all
 all: $(TARGET_FILE)
 
+.PHONY: clean-node
 clean-node:
 	@echo "Removing $(TARGET_FILE)"
 	@rm -f "$(TARGET_FILE)"
 
+.PHONY: clean-tgz
 clean-tgz:
 	@echo "Removing old releases"
 	@rm -rf "$(DIST_DIR)"
 
+.PHONY: clean
 clean: clean-node
 
+.PHONY: clean-all
 clean-all: clean-node clean-tgz
 
+.PHONY: tgz
 tgz: $(TGZ_FILE)
 
 $(TGZ_FILE):
