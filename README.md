@@ -5,7 +5,7 @@ MuninLite is a single Bourne Shell script that implements the Munin
 protocoll as well as some Linux specific plugins. The motivation for
 developing MuninLite was to provide a simple Munin Node, using inetd
 on systems without a full featured Perl and/or bash or a busybox
-system. 
+system.
 
 MuninLite is Copyright (C) 2007 Rune Nordbøe Skillingstad
 <rune@skillingstad.no> and released under GPLv2 (see LICENSE file)
@@ -106,7 +106,7 @@ echo "munin           4949/tcp        lrrd            # Munin" >>/etc/services
 ```
 
 Configure inetd or xinetd to fork this script for request on the
-munin port (4949). 
+munin port (4949).
 
 Sample configuration for xinetd is located in `examples/xinetd.d/munin`:
 ```shell
@@ -168,7 +168,7 @@ Plugin configuration
 To configure which plugins should be enabled, locate the `PLUGINS`
 variable in munin-node and remove unwanted plugins.
 
-There is no specific configuration for plugins. 
+There is no specific configuration for plugins.
 
 Munin configuration
 -------------------

@@ -8,7 +8,7 @@ Get a copy of the floppyfw devkit:
 
 Follow the readme to get a svn check out of the source.
 For the stable 3.0 series, the command is as follows:
-# svn co http://www.zelow.no/svn/floppyfw-3.0 
+# svn co http://www.zelow.no/svn/floppyfw-3.0
 
 Edit the BusyBox config with your favourite editor. It's located at
 /floppyfw-3.0/configs/config-busybox-1.2.2.1
@@ -32,7 +32,7 @@ If you want additional packages, copy the .ffw-files from the
 directory.
 
 Download post-muninlite.ini.txt from http://pong.no/floppyfw/muninlite/
-to the /floppyfw-3.0/floppy/packages directory and rename it to 
+to the /floppyfw-3.0/floppy/packages directory and rename it to
 post-muninlite.ini.
 
 Make the floppy-image:
@@ -51,4 +51,3 @@ If it works, you will see these messages during boot:
   /mnt/tmp/packages/post-muninlite.ini chmoded
   Running /etc/post-muninlite.ini
   Starting inetd.
-

@@ -1,12 +1,12 @@
 #!/bin/sh
 #
-# Simple Bourne Shell script that implements Munin protocoll and 
+# Simple Bourne Shell script that implements Munin protocoll and
 # some common Linux plugins.
 #
 # For latest version, see http://muninlite.sf.net/
 #
 # Copyright (c) 2007-2011 Rune Nordbøe Skillingstad <rune@skillingstad.no>
-# 
+#
 # Licensed under GPLv2 (see LICENSE file for full License)
 #
 # $Id: $
@@ -70,8 +70,8 @@ do_quit() {
 # ===== Runtime config =====
 RES=""
 for PLUG in $PLUGINS
-do 
-  if [ "$PLUG" = "if_" ]; then  
+do
+  if [ "$PLUG" = "if_" ]; then
     for INTER in $(grep -E '^ *(ppp|eth|wlan|ath|ra|ipsec|tap|br-)[^:]{1,}:' /proc/net/dev | cut -f1 -d: | sed 's/ //g');
     do
       INTERRES=$(echo $INTER | sed -e 's/\./VLAN/' -e 's/\-/_/')
@@ -106,7 +106,7 @@ do
       fi
     done
   else
-    RES="$RES $PLUG";
+    RES="$RES $PLUG"
   fi
 done
 PLUGINS=$RES
@@ -115,15 +115,15 @@ PLUGINS=$RES
 FUNCTIONS="list nodes config fetch version quit"
 HOSTNAME=$(hostname -f 2>/dev/null || hostname)
 echo "# munin node at $HOSTNAME"
-while read arg0 arg1 
-do 
+while read arg0 arg1
+do
   arg0=$(echo "$arg0" | xargs)
-  arg1=$(echo "$arg1" | xargs)  
+  arg1=$(echo "$arg1" | xargs)
   if ! echo "$FUNCTIONS" | grep "\b$arg0\b" >/dev/null 2>&1 ; then
     echo "# Unknown command. Try" $(echo "$FUNCTIONS" | sed -e 's/\( [[:alpha:]]\{1,\}\)/,\1/g' -e 's/,\( [[:alpha:]]\{1,\}\)$/ or\1/')
     continue
   fi
-  
+
   do_$arg0 $arg1
-done 
+done
 

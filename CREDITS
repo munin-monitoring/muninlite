@@ -14,11 +14,11 @@ Jimmy Olsen <jimmyo@linpro.no>
  - memory plugin in Munin
  - processes plugin in Munin
  - interupts plugin in Munin
- 
+
 Mike Fedyk <mfedyk@mikefedyk.com>
  - memory plugin in Munin
  - context switch graphing in interupts plugin in Munin
- 
+
 Nicolas Salles <mosan@users.sourceforge.net>
  - uptime plugin in Munin
 
@@ -32,7 +32,7 @@ Kai Ove Gran <kaiove@humla.no>
  - Help regarding available features in busybox in floppyfw
  - Build script (muninlite.mk) for floppyfw devkit
    (http://pong.no/floppyfw/muninlite/)
- - post ini script (post-muninlite.ini) for floppyfw 
+ - post ini script (post-muninlite.ini) for floppyfw
    (http://pong.no/floppyfw/muninlite/)
 
 Jozsef Marton
