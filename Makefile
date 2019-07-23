@@ -26,6 +26,15 @@ $(TARGET_FILE): plugins/* $(CONFIGURATION_FILE)
 	@chmod +x "$(TARGET_FILE).tmp"
 	@mv "$(TARGET_FILE).tmp" "$(TARGET_FILE)"
 
+.PHONY: help
+help:
+	@$(info Available targets:)
+	@$(info   all         - assemble 'TARGET_FILE' ($(TARGET_FILE)))
+	@$(info   clean       - remove assembled 'TARGET_FILE' ($(TARGET_FILE)))
+	@$(info   clean-all   - remove old releases from 'DIST_DIR' ($(DIST_DIR)))
+	@$(info   help        - show this overview)
+	@$(info   tgz         - create release archive)
+
 .PHONY: all
 all: $(TARGET_FILE)
 
