@@ -10,7 +10,7 @@ These distributions are known to be working with muninlite:
  - Remove '[ "${NETWORKING}" = "yes" ] || exit 0' from /etc/inet.d/xinetd
  - Add /etc/xinetd.d/munin (see examples dir for config)
  - Add munin (port 4949) to /etc/services
- - Add "munin-node : <ip adress of munin gatherer>" to /etc/hosts.allow
+ - Add "munin-node : <ip address of munin gatherer>" to /etc/hosts.allow
 
 * OpenSuSE 10.2
  - Just works

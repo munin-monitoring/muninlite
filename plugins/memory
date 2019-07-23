@@ -62,7 +62,7 @@ config_memory() {
   if [ "$VMALLOCUSED" != "" ]; then
     echo "vmalloc_used.label vmalloc_used"
     echo "vmalloc_used.draw STACK"
-    echo "vmalloc_used.info Virtual memory used by the kernel (used when the memory does not have to be physically contigious)."
+    echo "vmalloc_used.info Virtual memory used by the kernel (used when the memory does not have to be physically contiguous)."
   fi
   if [ "$COMMITTEDAS" != "" ]; then
     echo "committed.label committed"

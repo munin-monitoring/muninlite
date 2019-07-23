@@ -45,8 +45,7 @@
 2011-01-14 20:24  runesk
 
 	* munin-node.in: Accepted patch from Jozsef Marton. Plugins might
-	  now be added
-	  dynamicly using the plugindir_
+	  now be added dynamically using the plugindir_
 
 2009-03-17 12:42  runesk
 
