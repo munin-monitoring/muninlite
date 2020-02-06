@@ -100,7 +100,33 @@ cp munin-node /usr/local/bin
 chmod +x /usr/local/bin/munin-node
 ```
 
-Add munin port to `/etc/services`:
+Two typical ways of using MuninLite as a `munin-node` replacement are:
+
+* direct execution: suitable for remote hosts lacking root access (e.g. shared host)
+* TCP service via inetd/xinetd: providing a service that is accessible via TCP (like `munin-node`)
+
+Both approaches are detailed below.
+
+
+Installation for direct execution
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Configure the `address` setting of the node in the master's configuration with
+a suitable transport, e.g.:
+```
+[some.host.tld]
+    address ssh://node-a.example.org/usr/local/bin/munin-node
+```
+
+The above example causes the master to connect to the node via ssh and to
+execute the MuninLite script directly.  The running script responds to request
+from standard input just like it would do as a TCP service via inetd/xinetd.
+
+
+Installation as a TCP service (inetd/xinetd)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add munin port to `/etc/services` (in case it is missing):
 ```shell
 echo "munin           4949/tcp        lrrd            # Munin" >>/etc/services
 ```
@@ -132,7 +158,7 @@ iptables -A INPUT -p tcp --dport munin --source 10.42.42.25 -j ACCEPT
 
 Test
 ----
-To test script, just run it (`/usr/bin/local/munin-node`):
+To test the script, just run it (`/usr/bin/local/munin-node`):
 ```shell
 $ /usr/local/bin/munin-node
 # munin node at localhost.localdomain
@@ -173,10 +199,19 @@ There is no specific configuration for plugins.
 Munin configuration
 -------------------
 Configure your /etc/munin/munin.conf as you would for a regular
-munin-node.
+`munin-node`, if you configured MuninLite as a TCP service (e.g. via
+inetd/xinetd):
 
 ```
 [some.host.tld]
     address 10.42.42.25
+    use_node_name yes
+```
+
+In case of direct execution of MuninLite on the remote host (without a TCP
+service), you need to configure a transport and execute the script directly:
+```
+[some.host.tld]
+    address ssh://10.42.42.25/usr/local/bin/munin-node
     use_node_name yes
 ```
