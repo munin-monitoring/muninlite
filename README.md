@@ -7,7 +7,7 @@ developing MuninLite was to provide a simple Munin Node, using inetd
 on systems without a full featured Perl and/or bash or a busybox
 system.
 
-MuninLite is Copyright (C) 2007 Rune Nordbøe Skillingstad
+MuninLite is Copyright (C) 2007 Rune NordbÃ¸e Skillingstad
 <rune@skillingstad.no> and released under GPLv2 (see LICENSE file)
 
 Features
