@@ -2,21 +2,23 @@ PLUGINS = df cpu if_ if_err_ load memory processes swap netstat uptime interrupt
 CONFIGURATION_FILE ?= munin-node.conf
 INPUT_FILE ?= munin-node.in
 TARGET_FILE ?= munin-node
+PLUGIN_DIRECTORY ?= plugins
+PLUGIN_FILES = $(patsubst %,$(PLUGIN_DIRECTORY)/%,$(PLUGINS))
 VERSION ?= $(shell cat VERSION)
 DIST_DIR = releases
 TGZ_FILE ?= $(DIST_DIR)/muninlite-$(VERSION).tar.gz
 
 
-$(TARGET_FILE): $(INPUT_FILE) plugins/* $(CONFIGURATION_FILE)
+$(TARGET_FILE): $(INPUT_FILE) $(PLUGIN_FILES) $(CONFIGURATION_FILE)
 	@export VERSION="$(VERSION)"; \
 	export CONF=$$(grep -v '^#' "$(CONFIGURATION_FILE)"); \
 	export "PLUGINS=$(PLUGINS)"; \
 	echo "Making munin-node for muninlite version $$VERSION"; \
 	export PLSTR=""; \
-	for PLGIN in $$PLUGINS; \
+	for PLGIN in $(PLUGIN_FILES); \
 	do \
-	  echo "Adding plugin $$PLGIN"; \
-	  PLSTR=$$(printf "%s\n" "$$PLSTR"; grep -v '^#' plugins/$$PLGIN); \
+	  echo "Adding plugin $$(basename "$$PLGIN")"; \
+	  PLSTR=$$(printf "%s\n" "$$PLSTR"; grep -v '^#' "$$PLGIN"); \
 	done; \
 	perl -p -e '\
 	    s/\@\@VERSION\@\@/$$ENV{"VERSION"}/; \
