@@ -6,6 +6,7 @@ PLUGIN_DIRECTORY ?= plugins
 PLUGIN_FILES = $(patsubst %,$(PLUGIN_DIRECTORY)/%,$(PLUGINS))
 VERSION ?= $(shell cat VERSION)
 DIST_DIR = releases
+DESTDIR ?= /usr/local/bin
 TGZ_FILE ?= $(DIST_DIR)/muninlite-$(VERSION).tar.gz
 
 
@@ -32,6 +33,7 @@ help:
 	@$(info   all         - assemble 'TARGET_FILE' ($(TARGET_FILE)))
 	@$(info   clean       - remove assembled 'TARGET_FILE' ($(TARGET_FILE)))
 	@$(info   clean-all   - remove old releases from 'DIST_DIR' ($(DIST_DIR)))
+	@$(info   install     - install the standalone shell script)
 	@$(info   help        - show this overview)
 	@$(info   lint        - code style checks)
 	@$(info   spelling    - check spelling)
@@ -65,6 +67,12 @@ $(TGZ_FILE):
 	@mkdir -p "$(dir $(@))"
 	git archive --prefix=muninlite-$(VERSION)/ --format=tar --output "$@.tmp" HEAD
 	mv "$@.tmp" "$@"
+
+.PHONY: install
+install: $(TARGET_FILE)
+	mkdir -p "$(dir $(DESTDIR))"
+	cp "$(TARGET_FILE)" "$(DESTDIR)/"
+
 
 .PHONY: lint
 lint:

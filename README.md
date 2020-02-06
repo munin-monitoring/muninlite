@@ -55,11 +55,10 @@ You may assemble a reduced script by including only specific plugins:
 $ make PLUGINS="cpu load uptime"
 ```
 
-Copy munin-node to a suitable location (/usr/local/bin/) and make it
-executable (there will be a "make install" at a later release)
+Run `make install` or simply copy `munin-node` to a suitable location.
 
 ```shell
-cp munin-node /usr/local/bin
+make install
 ```
 
 Two typical ways of using MuninLite as a `munin-node` replacement are:
