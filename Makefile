@@ -1,4 +1,4 @@
-PLUGINS = df cpu if_ if_err_ load memory processes swap netstat uptime interrupts irqstats ntpdate plugindir_
+PLUGINS ?= df cpu if_ if_err_ load memory processes swap netstat uptime interrupts irqstats ntpdate plugindir_
 CONFIGURATION_FILE ?= munin-node.conf
 INPUT_FILE ?= munin-node.in
 TARGET_FILE ?= munin-node

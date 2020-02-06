@@ -44,11 +44,15 @@ Requirements
 Installation
 ------------
 Download source and unpack it.
-Edit Makefile to suit your choice of plugins
 
 Assemble the munin-node shell script by running `make`:
 ```shell
 $ make
+```
+
+You may assemble a reduced script by including only specific plugins:
+```shell
+$ make PLUGINS="cpu load uptime"
 ```
 
 Copy munin-node to a suitable location (/usr/local/bin/) and make it
