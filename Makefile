@@ -34,6 +34,7 @@ help:
 	@$(info   clean-all   - remove old releases from 'DIST_DIR' ($(DIST_DIR)))
 	@$(info   help        - show this overview)
 	@$(info   lint        - code style checks)
+	@$(info   spelling    - check spelling)
 	@$(info   tgz         - create release archive)
 
 .PHONY: all
@@ -67,3 +68,7 @@ $(TGZ_FILE):
 .PHONY: lint
 lint:
 	shellcheck -s dash --exclude=SC2230 $(PLUGIN_FILES) "$(INPUT_FILE)"
+
+.PHONY: spelling
+spelling:
+	find -name .git -prune -or -name $(DIST_DIR) -prune -or -type f | xargs codespell
