@@ -1,12 +1,13 @@
 PLUGINS = df cpu if_ if_err_ load memory processes swap netstat uptime interrupts irqstats ntpdate plugindir_
 CONFIGURATION_FILE ?= munin-node.conf
+INPUT_FILE ?= munin-node.in
 TARGET_FILE ?= munin-node
 VERSION ?= $(shell cat VERSION)
 DIST_DIR = releases
 TGZ_FILE ?= $(DIST_DIR)/muninlite-$(VERSION).tar.gz
 
 
-$(TARGET_FILE): plugins/* $(CONFIGURATION_FILE)
+$(TARGET_FILE): $(INPUT_FILE) plugins/* $(CONFIGURATION_FILE)
 	@export VERSION="$(VERSION)"; \
 	export CONF=$$(grep -v '^#' "$(CONFIGURATION_FILE)"); \
 	export "PLUGINS=$(PLUGINS)"; \
@@ -22,7 +23,7 @@ $(TARGET_FILE): plugins/* $(CONFIGURATION_FILE)
 	    s/\@\@CONF\@\@/$$ENV{"CONF"}/; \
 	    s/\@\@PLUGINS\@\@/$$ENV{"PLUGINS"}/; \
 	    s/\@\@PLSTR\@\@/$$ENV{"PLSTR"}/;' \
-	  munin-node.in >"$(TARGET_FILE).tmp"
+	  "$(INPUT_FILE)" >"$(TARGET_FILE).tmp"
 	@chmod +x "$(TARGET_FILE).tmp"
 	@mv "$(TARGET_FILE).tmp" "$(TARGET_FILE)"
 
