@@ -14,17 +14,17 @@ $(TARGET_FILE): $(INPUT_FILE) $(PLUGIN_FILES) $(CONFIGURATION_FILE)
 	@for plugin_filename in $(PLUGIN_FILES); do \
 		echo "Adding plugin $$(basename "$$plugin_filename")"; done
 	@export VERSION="$(VERSION)"; \
-	export CONF=$$(grep -v '^#' "$(CONFIGURATION_FILE)"); \
-	export "PLUGINS=$(PLUGINS)"; \
-	export PLSTR="$$(grep -vh '^#' $(PLUGIN_FILES))"; \
-	perl -p -e '\
-	    s/\@\@VERSION\@\@/$$ENV{"VERSION"}/; \
-	    s/\@\@CONF\@\@/$$ENV{"CONF"}/; \
-	    s/\@\@PLUGINS\@\@/$$ENV{"PLUGINS"}/; \
-	    s/\@\@PLSTR\@\@/$$ENV{"PLSTR"}/;' \
-	  "$(INPUT_FILE)" >"$(TARGET_FILE).tmp"
-	@chmod +x "$(TARGET_FILE).tmp"
-	@mv "$(TARGET_FILE).tmp" "$(TARGET_FILE)"
+		export "PLUGINS=$(PLUGINS)"; \
+		export CONF=$$(grep -v '^#' "$(CONFIGURATION_FILE)"); \
+		export PLSTR="$$(grep -vh '^#' $(PLUGIN_FILES))"; \
+		perl -p -e '\
+				s/\@\@VERSION\@\@/$$ENV{"VERSION"}/; \
+				s/\@\@CONF\@\@/$$ENV{"CONF"}/; \
+				s/\@\@PLUGINS\@\@/$$ENV{"PLUGINS"}/; \
+				s/\@\@PLSTR\@\@/$$ENV{"PLSTR"}/;' \
+			"$(INPUT_FILE)" >"$(TARGET_FILE).tmp"
+		@chmod +x "$(TARGET_FILE).tmp"
+		@mv "$(TARGET_FILE).tmp" "$(TARGET_FILE)"
 
 .PHONY: help
 help:
