@@ -26,38 +26,10 @@ MuninLite implements the following plugins:
 * interrupts
 * irqstats
 
-Included files
---------------
-* `Changelog`: Changelog
-* `CREDITS`: Credits to contributors
-* `LICENSE`: GPLv2 License
-* `Makefile`: Rules to make munin-node
-* `README`: This file
-* `TODO`: Things to do in future releases
-* `VERSION`: Current version
-* `munin-node.in`: The MuninLite script skeleton
-* `examples/xinetd.d/munin`: Sample xinetd configuration
-* `examples/inetd.conf`: Sample inetd.conf configuration
-* `examples/inetd.busybox`: Sample inetd.conf configuration for busybox
-* `examples/hosts.deny`: Sample hosts.deny configuration
-* `examples/hosts.allow`: Sample hosts.allow configuration
-* `plugins/cpu`: CPU usage plugin
-* `plugins/df`: Filesystem usage plugin
-* `plugins/if_`: Network interface traffic plugin
-* `plugins/if_err_`: Network interface errors plugin
-* `plugins/interrupts`: Interrupts & context switches plugin
-* `plugins/irqstats`: Individual interrupts plugin
-* `plugins/load`: Load average plugin
-* `plugins/memory`: Memory usage plugin
-* `plugins/netstat`: Netstat plugin
-* `plugins/processes`: Number of Processes plugin
-* `plugins/swap`: Swap in/out plugin
-* `plugins/uptime`: Uptime plugin
-
 Build requirements
 ------------------
-* Make: not sure what requirements
-* Perl: even very old versions should work
+* Make
+* Perl
 
 Requirements
 ------------
@@ -67,29 +39,16 @@ Requirements
 * cut: cut in busybox is sufficient
 * wc: wc in busybox is sufficient
 * xargs: xargs in busybox is sufficient
-* inetd: inetd in busybox is sufficient
+* inetd (optional): inetd in busybox is sufficient
 
 Installation
 ------------
 Download source and unpack it.
 Edit Makefile to suit your choice of plugins
 
-Make munin-node by running "make"
+Assemble the munin-node shell script by running `make`:
 ```shell
 $ make
-Making munin-node for muninlite version 0.9.14
-Adding plugin df
-Adding plugin cpu
-Adding plugin if_
-Adding plugin if_err_
-Adding plugin load
-Adding plugin memory
-Adding plugin processes
-Adding plugin swap
-Adding plugin netstat
-Adding plugin uptime
-Adding plugin interrupts
-Adding plugin irqstats
 ```
 
 Copy munin-node to a suitable location (/usr/local/bin/) and make it
@@ -97,7 +56,6 @@ executable (there will be a "make install" at a later release)
 
 ```shell
 cp munin-node /usr/local/bin
-chmod +x /usr/local/bin/munin-node
 ```
 
 Two typical ways of using MuninLite as a `munin-node` replacement are:
