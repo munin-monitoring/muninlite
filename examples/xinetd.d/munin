@@ -4,8 +4,8 @@ service munin
         protocol        = tcp
         wait            = no
         user            = root
-	group		= root
-	only_from       = 10.42.42.25
+        group           = root
+        only_from       = 10.42.42.25
         server          = /usr/local/bin/munin-node
         disable         = no
 }
