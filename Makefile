@@ -35,6 +35,7 @@ help:
 	@$(info   help        - show this overview)
 	@$(info   lint        - code style checks)
 	@$(info   spelling    - check spelling)
+	@$(info   test        - run tests)
 	@$(info   tgz         - create release archive)
 
 .PHONY: all
@@ -72,3 +73,9 @@ lint:
 .PHONY: spelling
 spelling:
 	find -name .git -prune -or -name $(DIST_DIR) -prune -or -type f | xargs codespell
+
+.PHONY: test
+test: $(TARGET_FILE)
+	@# verify that the assembled shell script can be interpreted by the local shell
+	@if echo "list" | "$(abspath $(TARGET_FILE))" | grep -qw "uptime"; then \
+		echo "Test OK"; else echo "Test FAILED"; false; fi
