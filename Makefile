@@ -10,16 +10,13 @@ TGZ_FILE ?= $(DIST_DIR)/muninlite-$(VERSION).tar.gz
 
 
 $(TARGET_FILE): $(INPUT_FILE) $(PLUGIN_FILES) $(CONFIGURATION_FILE)
+	@echo "Making munin-node for muninlite version $$VERSION"
+	@for plugin_filename in $(PLUGIN_FILES); do \
+		echo "Adding plugin $$(basename "$$plugin_filename")"; done
 	@export VERSION="$(VERSION)"; \
 	export CONF=$$(grep -v '^#' "$(CONFIGURATION_FILE)"); \
 	export "PLUGINS=$(PLUGINS)"; \
-	echo "Making munin-node for muninlite version $$VERSION"; \
-	export PLSTR=""; \
-	for PLGIN in $(PLUGIN_FILES); \
-	do \
-	  echo "Adding plugin $$(basename "$$PLGIN")"; \
-	  PLSTR=$$(printf "%s\n" "$$PLSTR"; grep -v '^#' "$$PLGIN"); \
-	done; \
+	export PLSTR="$$(grep -vh '^#' $(PLUGIN_FILES))"; \
 	perl -p -e '\
 	    s/\@\@VERSION\@\@/$$ENV{"VERSION"}/; \
 	    s/\@\@CONF\@\@/$$ENV{"CONF"}/; \
