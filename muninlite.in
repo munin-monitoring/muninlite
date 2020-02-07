@@ -108,7 +108,8 @@ do
     RES="$RES $PLUG"
   fi
 done
-PLUGINS=$RES
+# sort plugin names and remove surrounding whitespace
+PLUGINS=$(echo "$RES" | xargs -r -n 1 echo | sort | xargs echo)
 
 # ===== MAIN LOOP =====
 FUNCTIONS="list nodes config fetch version quit"
