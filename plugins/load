@@ -11,5 +11,5 @@ graph_info The load average of the machine describes how many processes are in t
 load.info Average load for the five minutes."
 }
 fetch_load() {
-  echo "load.value" $(cut -f2 -d\  /proc/loadavg)
+  echo "load.value" "$(cut -d " " -f 2 /proc/loadavg)"
 }

@@ -11,7 +11,7 @@ config_cpu() {
   SYSCRITICAL=$(($PERCENT * 50 / 100))
   USRWARNING=$(($PERCENT * 80 / 100))
   echo "graph_title CPU usage"
-  echo "graph_order system user nice idle" $extinfo
+  echo "graph_order system user nice idle $extinfo" | sed 's/ $//'
   echo "graph_args --base 1000 -r --lower-limit 0 --upper-limit $graphlimit"
   echo "graph_vlabel %"
   echo "graph_scale no"
@@ -63,7 +63,7 @@ config_cpu() {
     echo "softirq.min 0"
     echo "softirq.max 5000"
     echo "softirq.type DERIVE"
-    echo "softirq.info CPU time spent handling "batched" interrupts"
+    echo "softirq.info CPU time spent handling 'batched' interrupts"
   fi
 }
 fetch_cpu() {
@@ -72,13 +72,13 @@ fetch_cpu() {
     extinfo="iowait irq softirq"
   fi
   CINFO=$(grep '^cpu ' /proc/stat | cut -c6-)
-  echo "user.value" $(echo "$CINFO" | cut -d\  -f1)
-  echo "nice.value" $(echo "$CINFO" | cut -d\  -f2)
-  echo "system.value" $(echo "$CINFO" | cut -d\  -f3)
-  echo "idle.value" $(echo "$CINFO" | cut -d\  -f4)
-  if [ ! -z "$extinfo" ]; then
-    echo "iowait.value" $(echo "$CINFO" | cut -d\  -f5)
-    echo "irq.value" $(echo "$CINFO" | cut -d\  -f6)
-    echo "softirq.value" $(echo "$CINFO" | cut -d\  -f7)
+  echo "user.value" "$(echo "$CINFO" | cut -d " " -f 1)"
+  echo "nice.value" "$(echo "$CINFO" | cut -d " " -f 2)"
+  echo "system.value" "$(echo "$CINFO" | cut -d " " -f 3)"
+  echo "idle.value" "$(echo "$CINFO" | cut -d " " -f 4)"
+  if [ -n "$extinfo" ]; then
+    echo "iowait.value" "$(echo "$CINFO" | cut -d " " -f 5)"
+    echo "irq.value" "$(echo "$CINFO" | cut -d " " -f 6)"
+    echo "softirq.value" "$(echo "$CINFO" | cut -d " " -f 7)"
   fi
 }

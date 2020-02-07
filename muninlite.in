@@ -31,7 +31,7 @@ clean_fieldname() {
 
 # ===== NODE CODE =====
 do_list() {
-  echo $PLUGINS
+  echo "$PLUGINS"
 }
 
 
@@ -42,7 +42,7 @@ do_nodes() {
 
 do_config() {
   if echo "$PLUGINS" | grep -qwF "$1"; then
-    config_$1
+    "config_$1"
   else
     echo "# Unknown service"
   fi
@@ -51,7 +51,7 @@ do_config() {
 
 do_fetch() {
   if echo "$PLUGINS" | grep -qwF "$1"; then
-    fetch_$1
+    "fetch_$1"
   else
     echo "# Unknown service"
   fi
@@ -73,18 +73,18 @@ do
   if [ "$PLUG" = "if_" ]; then
     for INTER in $(grep -E '^ *(ppp|eth|wlan|ath|ra|ipsec|tap|br-)[^:]{1,}:' /proc/net/dev | cut -f1 -d: | sed 's/ //g');
     do
-      INTERRES=$(echo $INTER | sed -e 's/\./VLAN/' -e 's/\-/_/')
+      INTERRES=$(echo "$INTER" | sed -e 's/\./VLAN/' -e 's/\-/_/')
       RES="$RES if_$INTERRES"
-      eval "fetch_if_${INTERRES}() { fetch_if $INTER $@; };"
-      eval "config_if_${INTERRES}() { config_if $INTER $@; };"
+      eval 'fetch_if_'"$INTERRES"'() { fetch_if "'"$INTER"'" "$@"; };'
+      eval 'config_if_'"$INTERRES"'() { config_if "'"$INTER"'" "$@"; };'
     done
   elif [ "$PLUG" = "if_err_" ]; then
     for INTER in $(grep -E '^ *(ppp|eth|wlan|ath|ra|ipsec|tap|br-)[^:]{1,}:' /proc/net/dev | cut -f1 -d: | sed 's/ //g');
     do
-      INTERRES=$(echo $INTER | sed -e 's/\./VLAN/' -e 's/\-/_/')
+      INTERRES=$(echo "$INTER" | sed -e 's/\./VLAN/' -e 's/\-/_/')
       RES="$RES if_err_$INTERRES"
-      eval "fetch_if_err_${INTERRES}() { fetch_if_err $INTER $@; };"
-      eval "config_if_err_${INTERRES}() { config_if_err $INTER $@; };"
+      eval 'fetch_if_err_'"$INTERRES"'() { fetch_if_err "'"$INTER"'" "$@"; };'
+      eval 'config_if_err_'"$INTERRES"'() { config_if_err "'"$INTER"'" "$@"; };'
     done
   elif [ "$PLUG" = "netstat" ]; then
     if netstat -s >/dev/null 2>&1; then
@@ -93,15 +93,15 @@ do
   elif [ "$PLUG" = "plugindir_" ]; then
     for MYPLUGIN in $(if [ -d "$PLUGIN_DIRECTORY" ]; then find -L "$PLUGIN_DIRECTORY" -type f -name "$PLUGINPATTERN"; fi);
     do
-      if [ -f $MYPLUGIN -a -x $MYPLUGIN ]; then
-        MYPLUGINNAME=$(basename $MYPLUGIN)
+      if [ -f "$MYPLUGIN" ] && [ -x "$MYPLUGIN" ]; then
+        MYPLUGINNAME=$(basename "$MYPLUGIN")
         #ensure we don't have name collision
         if echo "$RES" | grep -qwF "$MYPLUGINNAME"; then
           MYPLUGINNAME="plugindir_$MYPLUGINNAME"
         fi
         RES="$RES $MYPLUGINNAME"
-        eval "fetch_${MYPLUGINNAME}() { $MYPLUGIN ; };"
-        eval "config_${MYPLUGINNAME}() { $MYPLUGIN config ; };"
+        eval "fetch_${MYPLUGINNAME}() { '$MYPLUGIN'; };"
+        eval "config_${MYPLUGINNAME}() { '$MYPLUGIN' config; };"
       fi
     done
   else
@@ -120,10 +120,8 @@ do
   arg0=$(echo "$arg0" | xargs)
   arg1=$(echo "$arg1" | xargs)
   if ! echo "$FUNCTIONS" | grep -qwF "$arg0"; then
-    echo "# Unknown command. Try" $(echo "$FUNCTIONS" | sed -e 's/\( [[:alpha:]]\{1,\}\)/,\1/g' -e 's/,\( [[:alpha:]]\{1,\}\)$/ or\1/')
-    continue
+    echo "# Unknown command. Try $(echo "$FUNCTIONS" | sed -e 's/\( [[:alpha:]]\{1,\}\)/,\1/g' -e 's/,\( [[:alpha:]]\{1,\}\)$/ or\1/')"
+  else
+    "do_$arg0" "$arg1"
   fi
-
-  do_$arg0 $arg1
 done
-

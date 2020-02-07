@@ -11,12 +11,10 @@ fetch_ntpdate() {
   NTPDATE="/usr/sbin/ntpdate"
   OFFSET=0
   DELAY=0
-  if [ "$NTP_PEER" != "" ]; then
-    if [ -x "$NTPDATE" ]; then
-      DATA=$($NTPDATE -q $NTP_PEER | awk '/^server.*offset/{gsub(/,/,"");printf "%s %s", ($6*1000), ($8*1000);}')
-      OFFSET=$(echo "$DATA" | cut -d\  -f1)
-      DELAY=$(echo "$DATA" | cut -d\  -f2)
-    fi
+  if [ -n "$NTP_PEER" ] && [ -x "$NTPDATE" ]; then
+    DATA=$("$NTPDATE" -q "$NTP_PEER" | awk '/^server.*offset/{gsub(/,/,""); printf "%s %s", ($6*1000), ($8*1000);}')
+    OFFSET=$(echo "$DATA" | cut -d " " -f 1)
+    DELAY=$(echo "$DATA" | cut -d " " -f 2)
   fi
   echo "offset.value $OFFSET"
   echo "delay.value $DELAY"

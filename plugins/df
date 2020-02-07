@@ -6,8 +6,8 @@ graph_category disk
 graph_info This graph shows disk usage on the machine."
   for PART in $(df -P | grep '^/' | sed '/\/[a-z0-9]*$/!d;s/.* \([a-z0-9\/]\{1,\}\)$/\1/g')
   do
-    PINFO=$(df -P $PART | tail -1);
-    PNAME=$(echo $PINFO | cut -d\  -f1 | sed 's/\//_/g')
+    PINFO=$(df -P "$PART" | tail -1);
+    PNAME=$(echo "$PINFO" | cut -d " " -f 1 | sed 's/\//_/g')
     echo "$PNAME.label $PART"
     echo "$PNAME.info $PNAME -> $PART"
     echo "$PNAME.warning 92"
@@ -17,8 +17,8 @@ graph_info This graph shows disk usage on the machine."
 fetch_df() {
   for PART in $(df -P | grep '^/' | sed '/\/[a-z0-9]*$/!d;s/.* \([a-z0-9\/]\{1,\}\)$/\1/g')
   do
-    PINFO=$(df -P $PART | tail -1);
-    PNAME=$(echo $PINFO | cut -d\  -f1 | sed 's/[\/.-]/_/g')
-    echo "$PNAME.value" $(echo $PINFO | sed -e 's/\%//g' -e 's/  */ /g' | cut -f5 -d' ')
+    PINFO=$(df -P "$PART" | tail -1);
+    PNAME=$(echo "$PINFO" | cut -d " " -f 1 | sed 's/[\/.-]/_/g')
+    echo "$PNAME.value" "$(echo "$PINFO" | sed -e 's/\%//g' -e 's/  */ /g' | cut -d " " -f 5)"
   done
 }

@@ -9,5 +9,5 @@ config_processes() {
   echo "processes.info The current number of processes."
 }
 fetch_processes() {
-  echo "processes.value" $(echo /proc/[0-9]* | wc -w)
+  echo "processes.value" "$(echo /proc/[0-9]* | wc -w)"
 }

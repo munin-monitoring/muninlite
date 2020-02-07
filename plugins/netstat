@@ -32,9 +32,9 @@ config_netstat() {
 }
 fetch_netstat() {
   NINFO=$(netstat -s | sed 's/ \{1,\}/ /g')
-  echo "active.value" $(echo "$NINFO" | grep "active connections" | cut -d\  -f2)
-  echo "passive.value" $(echo "$NINFO" | grep "passive connection" | cut -d\  -f2)
-  echo "failed.value" $(echo "$NINFO" | grep "failed connection" | cut -d\  -f2)
-  echo "resets.value" $(echo "$NINFO" | grep "connection resets" | cut -d\  -f2)
-  echo "established.value" $(echo "$NINFO" | grep "connections established" | cut -d\  -f2)
+  echo "active.value" "$(echo "$NINFO" | grep "active connections" | cut -d " " -f 2)"
+  echo "passive.value" "$(echo "$NINFO" | grep "passive connection" | cut -d " " -f 2)"
+  echo "failed.value" "$(echo "$NINFO" | grep "failed connection" | cut -d " " -f 2)"
+  echo "resets.value" "$(echo "$NINFO" | grep "connection resets" | cut -d " " -f 2)"
+  echo "established.value" "$(echo "$NINFO" | grep "connections established" | cut -d " " -f 2)"
 }

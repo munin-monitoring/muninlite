@@ -17,6 +17,6 @@ config_interrupts() {
 }
 fetch_interrupts() {
   IINFO=$(cat /proc/stat)
-  echo "ctx.value" $(echo "$IINFO" | grep "^ctxt" | cut -d\  -f2)
-  echo "intr.value" $(echo "$IINFO" | grep "^intr" | cut -d\  -f2)
+  echo "ctx.value" "$(echo "$IINFO" | grep "^ctxt" | cut -d " " -f 2)"
+  echo "intr.value" "$(echo "$IINFO" | grep "^intr" | cut -d " " -f 2)"
 }

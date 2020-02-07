@@ -15,7 +15,7 @@ config_if_err() {
   echo "trans.warning 1"
 }
 fetch_if_err() {
-  IINFO=$(grep "$1:" /proc/net/dev | cut -d: -f2 | sed -e 's/  */ /g' -e 's/^[ \t]*//')
-  echo "rcvd.value" $(echo $IINFO | cut -d\  -f3)
-  echo "trans.value" $(echo $IINFO | cut -d\  -f11)
+  IINFO=$(grep "^ *$1:" /proc/net/dev | cut -d ":" -f 2 | sed -e 's/  */ /g' -e 's/^[ \t]*//')
+  echo "rcvd.value" "$(echo "$IINFO" | cut -d " " -f 3)"
+  echo "trans.value" "$(echo "$IINFO" | cut -d " " -f 11)"
 }
