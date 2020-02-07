@@ -14,9 +14,10 @@ VERSION="@@VERSION@@"
 
 @@CONF@@
 
-# if plugindir_ is present in $PLUGINS,
-# iexecutables (scripts, binaries) matching the following pattern will be scanned and operated as plugins
-PLUGINPATTERN=$(dirname $0)"/munin-node-plugin.d/*"
+# if plugindir_ is present in $PLUGINS, executables (scripts, binaries) in the specified path
+# and matching the pattern will be scanned and operated as plugins
+PLUGIN_DIRECTORY="$(dirname "$0")/munin-node-plugin.d"
+PLUGINPATTERN="*"
 
 # Remove unwanted plugins from this list
 PLUGINS="@@PLUGINS@@"
@@ -90,7 +91,7 @@ do
       RES="$RES netstat"
     fi
   elif [ "$PLUG" = "plugindir_" ]; then
-    for MYPLUGIN in $(ls -1 $PLUGINPATTERN 2>/dev/null );
+    for MYPLUGIN in $(if [ -d "$PLUGIN_DIRECTORY" ]; then find -L "$PLUGIN_DIRECTORY" -type f -name "$PLUGINPATTERN"; fi);
     do
       if [ -f $MYPLUGIN -a -x $MYPLUGIN ]; then
         MYPLUGINNAME=$(basename $MYPLUGIN)
