@@ -14,7 +14,7 @@ config_memory() {
   ACTIVECACHE=$(echo "$MINFO" | grep "^ActiveCache:" | cut -d\  -f2)
   INACTIVE=$(echo "$MINFO" | grep "^Inactive:" | cut -d\  -f2)
   INACTDIRTY=$(echo "$MINFO" | grep "^Inact_dirty:" | cut -d\  -f2)
-  INACTLAUNDY=$(echo "$MINFO" | grep "^Inact_laundry:" | cut -d\  -f2)
+  INACTLAUNDRY=$(echo "$MINFO" | grep "^Inact_laundry:" | cut -d\  -f2)
   INACTCLEAN=$(echo "$MINFO" | grep "^Inact_clean:" | cut -d\  -f2)
 
   GRAPH_ORDER="apps";
@@ -129,7 +129,7 @@ fetch_memory() {
   ACTIVECACHE=$(echo "$MINFO" | grep "^ActiveCache:" | cut -d\  -f2)
   INACTIVE=$(echo "$MINFO" | grep "^Inactive:" | cut -d\  -f2)
   INACTDIRTY=$(echo "$MINFO" | grep "^Inact_dirty:" | cut -d\  -f2)
-  INACTLAUNDY=$(echo "$MINFO" | grep "^Inact_laundry:" | cut -d\  -f2)
+  INACTLAUNDRY=$(echo "$MINFO" | grep "^Inact_laundry:" | cut -d\  -f2)
   INACTCLEAN=$(echo "$MINFO" | grep "^Inact_clean:" | cut -d\  -f2)
   APPS=$(($MEMTOTAL - $MEMFREE - $BUFFERS - $CACHED))
   SWAP=$(($SWAP_TOTAL - $SWAP_FREE))
