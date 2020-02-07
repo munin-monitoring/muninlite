@@ -17,8 +17,8 @@ config_swap() {
 fetch_swap() {
   if [ -f /proc/vmstat ]; then
     SINFO=$(cat /proc/vmstat)
-    echo "swap_in.value" $(echo "$INFO" | awk 'BEGIN { result="U"; } { if ($1 == "pswpin") result=$2; } END { print(result); }')
-    echo "swap_out.value" $(echo "$INFO" | awk 'BEGIN { result="U"; } { if ($1 == "pswpout") result=$2; } END { print(result); }')
+    echo "swap_in.value" $(echo "$SINFO" | awk 'BEGIN { result="U"; } { if ($1 == "pswpin") result=$2; } END { print(result); }')
+    echo "swap_out.value" $(echo "$SINFO" | awk 'BEGIN { result="U"; } { if ($1 == "pswpout") result=$2; } END { print(result); }')
   else
     SINFO=$(grep "^swap" /proc/stat)
     echo "swap_in.value" $(echo "$SINFO" | cut -d\  -f2)
