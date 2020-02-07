@@ -1,7 +1,7 @@
 PLUGINS ?= df cpu if_ if_err_ load memory processes swap netstat uptime interrupts irqstats ntpdate plugindir_
-CONFIGURATION_FILE ?= munin-node.conf
-INPUT_FILE ?= munin-node.in
-TARGET_FILE ?= munin-node
+CONFIGURATION_FILE ?= muninlite.conf
+INPUT_FILE ?= muninlite.in
+TARGET_FILE ?= muninlite
 PLUGIN_DIRECTORY ?= plugins
 PLUGIN_FILES = $(patsubst %,$(PLUGIN_DIRECTORY)/%,$(PLUGINS))
 VERSION ?= $(shell cat VERSION)
@@ -11,7 +11,7 @@ TGZ_FILE ?= $(DIST_DIR)/muninlite-$(VERSION).tar.gz
 
 
 $(TARGET_FILE): $(INPUT_FILE) $(PLUGIN_FILES) $(CONFIGURATION_FILE)
-	@echo "Making munin-node for muninlite version $$VERSION"
+	@echo "Making muninlite version $$VERSION"
 	@for plugin_filename in $(PLUGIN_FILES); do \
 		echo "Adding plugin $$(basename "$$plugin_filename")"; done
 	@export VERSION="$(VERSION)"; \

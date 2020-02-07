@@ -6,6 +6,6 @@ service munin
         user            = root
         group           = root
         only_from       = 10.42.42.25
-        server          = /usr/local/bin/munin-node
+        server          = /usr/local/bin/muninlite
         disable         = no
 }
