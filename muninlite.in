@@ -59,7 +59,7 @@ do_fetch() {
 }
 
 do_version() {
-  echo "munins node on $HOSTNAME version: $VERSION (munin-lite)"
+  echo "munins node on $HOSTNAME version: $VERSION (muninlite)"
 }
 
 do_quit() {
