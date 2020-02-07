@@ -41,7 +41,7 @@ do_nodes() {
 }
 
 do_config() {
-  if echo "$PLUGINS" | grep "\b$1\b" >/dev/null 2>&1; then
+  if echo "$PLUGINS" | grep -qwF "$1"; then
     config_$1
   else
     echo "# Unknown service"
@@ -50,7 +50,7 @@ do_config() {
 }
 
 do_fetch() {
-  if echo "$PLUGINS" | grep "\b$1\b" >/dev/null 2>&1; then
+  if echo "$PLUGINS" | grep -qwF "$1"; then
     fetch_$1
   else
     echo "# Unknown service"
@@ -96,7 +96,7 @@ do
       if [ -f $MYPLUGIN -a -x $MYPLUGIN ]; then
         MYPLUGINNAME=$(basename $MYPLUGIN)
         #ensure we don't have name collision
-        if echo "$RES" | grep "\b$MYPLUGINNAME\b" >/dev/null 2>&1 ; then
+        if echo "$RES" | grep -qwF "$MYPLUGINNAME"; then
           MYPLUGINNAME="plugindir_$MYPLUGINNAME"
         fi
         RES="$RES $MYPLUGINNAME"
@@ -119,7 +119,7 @@ while read arg0 arg1
 do
   arg0=$(echo "$arg0" | xargs)
   arg1=$(echo "$arg1" | xargs)
-  if ! echo "$FUNCTIONS" | grep "\b$arg0\b" >/dev/null 2>&1 ; then
+  if ! echo "$FUNCTIONS" | grep -qwF "$arg0"; then
     echo "# Unknown command. Try" $(echo "$FUNCTIONS" | sed -e 's/\( [[:alpha:]]\{1,\}\)/,\1/g' -e 's/,\( [[:alpha:]]\{1,\}\)$/ or\1/')
     continue
   fi
