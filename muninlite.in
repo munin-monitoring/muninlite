@@ -12,6 +12,8 @@
 
 VERSION="@@VERSION@@"
 
+set -eu
+
 @@CONF@@
 
 # if plugindir_ is present in $PLUGINS, executables (scripts, binaries) in the specified path
