@@ -168,8 +168,8 @@ possible to expose additional plugins (just like the official
 as plugins.
 
 
-Munin configuration
--------------------
+Munin master configuration
+--------------------------
 Configure your /etc/munin/munin.conf as you would for a regular
 `muninnode`, if you configured MuninLite as a TCP service (e.g. via
 inetd/xinetd):
