@@ -10,36 +10,12 @@ system.
 MuninLite is Copyright (C) 2007 Rune Nordbøe Skillingstad
 <rune@skillingstad.no> and released under GPLv2 (see LICENSE file)
 
-Features
---------
-MuninLite implements the following plugins:
-* df
-* cpu
-* if_
-* if_err_
-* load
-* memory
-* processes
-* swap
-* netstat
-* uptime
-* interrupts
-* irqstats
 
 Build requirements
 ------------------
 * Make
 * Perl
 
-Requirements
-------------
-* Bourne Shell: ash or dash should be sufficient
-* grep: simple grep in busybox is sufficient
-* sed: simple sed in busybox is sufficient -- but a bit strange...
-* cut: cut in busybox is sufficient
-* wc: wc in busybox is sufficient
-* xargs: xargs in busybox is sufficient
-* inetd (optional): inetd in busybox is sufficient
 
 Installation
 ------------
