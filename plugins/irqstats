@@ -9,7 +9,7 @@ graph_category system"
   do
     IDL=$(echo "$IINFO" | grep "^$ID:")
     INFO=$(eval "echo \"$IDL\" | cut -d ' '  -f '$((3 + CPUS))-'")
-    if [ "$INFO" = "" ]; then
+    if [ -z "$INFO" ]; then
       echo "i$ID.label $ID"
     else
       echo "i$ID.label $INFO"

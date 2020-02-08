@@ -45,7 +45,7 @@ config_cpu() {
   echo "idle.max 5000"
   echo "idle.type DERIVE"
   echo "idle.info Idle CPU time"
-  if [ ! -z "$extinfo" ]; then
+  if [ -n "$extinfo" ]; then
     echo "iowait.label iowait"
     echo "iowait.draw STACK"
     echo "iowait.min 0"

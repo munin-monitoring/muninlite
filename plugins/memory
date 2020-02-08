@@ -18,10 +18,10 @@ config_memory() {
   INACTCLEAN=$(echo "$MINFO" | grep "^Inact_clean:" | cut -d\  -f2)
 
   GRAPH_ORDER="apps";
-  test "$PAGETABLES" != "" && GRAPH_ORDER="$GRAPH_ORDER page_tables"
-  test "$SWAPCACHED" != "" && GRAPH_ORDER="$GRAPH_ORDER swap_cache"
-  test "$VMALLOCUSED" != "" && GRAPH_ORDER="$GRAPH_ORDER vmalloc_used"
-  test "$SLAB" != "" && GRAPH_ORDER="$GRAPH_ORDER slab"
+  [ -n "$PAGETABLES" ] && GRAPH_ORDER="$GRAPH_ORDER page_tables"
+  [ -n "$SWAPCACHED" ] && GRAPH_ORDER="$GRAPH_ORDER swap_cache"
+  [ -n "$VMALLOCUSED" ] && GRAPH_ORDER="$GRAPH_ORDER vmalloc_used"
+  [ -n "$SLAB" ] && GRAPH_ORDER="$GRAPH_ORDER slab"
   GRAPH_ORDER="$GRAPH_ORDER cached buffers free swap"
 
   echo "graph_args --base 1024 -l 0 --vertical-label Bytes --upper-limit $MEMTOTAL"
@@ -44,65 +44,65 @@ config_memory() {
   echo "free.label unused"
   echo "free.draw STACK"
   echo "free.info Wasted memory. Memory that is not used for anything at all."
-  if [ "$SLAB" != "" ]; then
+  if [ -n "$SLAB" ]; then
     echo "slab.label slab_cache"
     echo "slab.draw STACK"
     echo "slab.info Memory used by the kernel (major users are caches like inode, dentry, etc)."
   fi
-  if [ "$SWAPCACHED" != "" ]; then
+  if [ -n "$SWAPCACHED" ]; then
     echo "swap_cache.label swap_cache"
     echo "swap_cache.draw STACK"
     echo "swap_cache.info A piece of memory that keeps track of pages that have been fetched from swap but not yet been modified."
   fi
-  if [ "$PAGETABLES" != "" ]; then
+  if [ -n "$PAGETABLES" ]; then
     echo "page_tables.label page_tables"
     echo "page_tables.draw STACK"
     echo "page_tables.info Memory used to map between virtual and physical memory addresses.\n"
   fi
-  if [ "$VMALLOCUSED" != "" ]; then
+  if [ -n "$VMALLOCUSED" ]; then
     echo "vmalloc_used.label vmalloc_used"
     echo "vmalloc_used.draw STACK"
     echo "vmalloc_used.info Virtual memory used by the kernel (used when the memory does not have to be physically contiguous)."
   fi
-  if [ "$COMMITTEDAS" != "" ]; then
+  if [ -n "$COMMITTEDAS" ]; then
     echo "committed.label committed"
     echo "committed.draw LINE2"
     echo "committed.warn" $((SWAPTOTAL + MEMTOTAL))
     echo "committed.info The amount of memory that would be used if all the memory that's been allocated were to be used."
   fi
-  if [ "$MAPPED" != "" ]; then
+  if [ -n "$MAPPED" ]; then
     echo "mapped.label mapped"
     echo "mapped.draw LINE2"
     echo "mapped.info All mmap()ed pages."
   fi
-  if [ "$ACTIVE" != "" ]; then
+  if [ -n "$ACTIVE" ]; then
     echo "active.label active"
     echo "active.draw LINE2"
     echo "active.info Memory recently used. Not reclaimed unless absolutely necessary."
   fi
-  if [ "$ACTIVEANON" != "" ]; then
+  if [ -n "$ACTIVEANON" ]; then
     echo "active_anon.label active_anon"
     echo "active_anon.draw LINE1"
   fi
-  if [ "$ACTIVECACHE" != "" ]; then
+  if [ -n "$ACTIVECACHE" ]; then
     echo "active_cache.label active_cache"
     echo "active_cache.draw LINE1"
   fi
-  if [ "$INACTIVE" != "" ]; then
+  if [ -n "$INACTIVE" ]; then
     echo "inactive.label inactive"
     echo "inactive.draw LINE2"
     echo "inactive.info Memory not currently used."
   fi
-  if [ "$INACTDIRTY" != "" ]; then
+  if [ -n "$INACTDIRTY" ]; then
     echo "inact_dirty.label inactive_dirty"
     echo "inact_dirty.draw LINE1"
     echo "inact_dirty.info Memory not currently used, but in need of being written to disk."
   fi
-  if [ "$INACTLAUNDRY" != "" ]; then
+  if [ -n "$INACTLAUNDRY" ]; then
     echo "inact_laundry.label inactive_laundry"
     echo "inact_laundry.draw LINE1"
   fi
-  if [ "$INACTCLEAN" != "" ]; then
+  if [ -n "$INACTCLEAN" ]; then
     echo "inact_clean.label inactive_clean"
     echo "inact_clean.draw LINE1"
     echo "inact_clean.info Memory not currently used."
@@ -137,47 +137,47 @@ fetch_memory() {
   echo "swap.value" $((SWAP * 1024))
   echo "cached.value" $((CACHED * 1024))
   echo "free.value" $((MEMFREE * 1024))
-  if [ "$SLAB" != "" ]; then
+  if [ -n "$SLAB" ]; then
     echo "slab.value" $((SLAB * 1024))
     APPS=$((APPS - SLAB))
   fi
-  if [ "$SWAPCACHED" != "" ]; then
+  if [ -n "$SWAPCACHED" ]; then
     echo "swap_cache.value" $((SWAPCACHED * 1024))
     APPS=$((APPS - SWAPCACHED))
   fi
-  if [ "$PAGETABLES" != "" ]; then
+  if [ -n "$PAGETABLES" ]; then
     echo "page_tables.value" $((PAGETABLES * 1024))
     APPS=$((APPS - PAGETABLES))
   fi
-  if [ "$VMALLOCUSED" != "" ]; then
+  if [ -n "$VMALLOCUSED" ]; then
     echo "vmalloc_used.value" $((VMALLOCUSED * 1024))
     APPS=$((APPS - VMALLOCUSED))
   fi
-  if [ "$COMMITTEDAS" != "" ]; then
+  if [ -n "$COMMITTEDAS" ]; then
     echo "committed.value" $((COMMITTEDAS * 1024))
   fi
-  if [ "$MAPPED" != "" ]; then
+  if [ -n "$MAPPED" ]; then
     echo "mapped.value" $((MAPPED * 1024))
   fi
-  if [ "$ACTIVE" != "" ]; then
+  if [ -n "$ACTIVE" ]; then
     echo "active.value" $((ACTIVE * 1024))
   fi
-  if [ "$ACTIVEANON" != "" ]; then
+  if [ -n "$ACTIVEANON" ]; then
     echo "active_anon.value" $((ACTIVEANON * 1024))
   fi
-  if [ "$ACTIVECACHE" != "" ]; then
+  if [ -n "$ACTIVECACHE" ]; then
     echo "active_cache.value" $((ACTIVECACHE * 1024))
   fi
-  if [ "$INACTIVE" != "" ]; then
+  if [ -n "$INACTIVE" ]; then
     echo "inactive.value" $((INACTIVE * 1024))
   fi
-  if [ "$INACTDIRTY" != "" ]; then
+  if [ -n "$INACTDIRTY" ]; then
     echo "inact_dirty.value" $((INACTDIRTY * 1024))
   fi
-  if [ "$INACTLAUNDRY" != "" ]; then
+  if [ -n "$INACTLAUNDRY" ]; then
     echo "inact_laundry.value" $((INACTLAUNDRY * 1024))
   fi
-  if [ "$INACTCLEAN" != "" ]; then
+  if [ -n "$INACTCLEAN" ]; then
     echo "inact_clean.value" $((INACTCLEAN * 1024))
   fi
 
