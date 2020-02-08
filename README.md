@@ -1,5 +1,4 @@
-README for MuninLite
-====================
+# MuninLite
 
 MuninLite is a single Bourne Shell script that implements the Munin
 protocoll as well as some Linux specific plugins. The motivation for
@@ -8,8 +7,7 @@ on systems without a full featured Perl and/or bash or a busybox
 system.
 
 
-Project scope
--------------
+# Project scope
 
 Muninlite is supposed to be a minimal portable and shell-based
 implementation of `munin-node`.  It provides a small set of
@@ -19,8 +17,7 @@ Only essential tools (e.g. the ones provided by busybox) should
 be required for MuninLite.
 
 
-Missing features (by design)
-----------------------------
+# Missing features (by design)
 
 The following features of the official `munin-node` implementation
 are not included (see "Project scope" above):
@@ -33,14 +30,16 @@ are not included (see "Project scope" above):
   (e.g. killing a plugin process after a timeout)
 
 
-Build requirements
-------------------
+# Installation
+
+## Build requirements
+
 * Make
 * Perl
 
 
-Installation
-------------
+## Installation
+
 Download source and unpack it.
 
 Assemble the MuninLite shell script by running `make`:
@@ -67,8 +66,7 @@ Two typical ways of using MuninLite as a `munin-node` replacement are:
 Both approaches are detailed below.
 
 
-Installation for direct execution
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+### Installation for direct execution
 
 Configure the `address` setting of the node in the master's configuration with
 a suitable transport, e.g.:
@@ -82,8 +80,7 @@ execute the MuninLite script directly.  The running script responds to request
 from standard input just like it would do as a TCP service via inetd/xinetd.
 
 
-Installation as a TCP service (inetd/xinetd)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+### Installation as a TCP service (inetd/xinetd)
 
 Add munin port to `/etc/services` (in case it is missing):
 ```shell
@@ -115,8 +112,8 @@ Iptables might be set with something like this:
 iptables -A INPUT -p tcp --dport munin --source 10.42.42.25 -j ACCEPT
 ```
 
-Test
-----
+## Test
+
 To test the script, just run it (`/usr/bin/local/muninlite`):
 ```shell
 $ /usr/local/bin/muninlite
@@ -148,16 +145,17 @@ Connection closed by foreign host.
 ```
 
 
-Plugin configuration
---------------------
+# Configuration
+
+## Plugin configuration
+
 To configure which plugins should be enabled, locate the `PLUGINS`
 variable in `muninlite` and remove unwanted plugins.
 
 There is no specific configuration for plugins.
 
 
-External plugins
-----------------
+## External plugins
 
 MuninLite includes a set of integrated plugins.  In addition it is
 possible to expose additional plugins (just like the official
@@ -166,8 +164,8 @@ possible to expose additional plugins (just like the official
 as plugins.
 
 
-Munin master configuration
---------------------------
+## Munin master configuration
+
 Configure your /etc/munin/munin.conf as you would for a regular
 `muninnode`, if you configured MuninLite as a TCP service (e.g. via
 inetd/xinetd):
@@ -187,8 +185,8 @@ service), you need to configure a transport and execute the script directly:
 ```
 
 
-License and copyright
----------------------
+# License and copyright
+
 MuninLite is released under GPLv2 (see LICENSE file).
 
 Copyright (C) 2007-2011 Rune Nordbøe Skillingstad <rune@skillingstad.no>
