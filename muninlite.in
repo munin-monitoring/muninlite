@@ -110,7 +110,7 @@ PLUGINS=$(echo "$RES" | xargs -r -n 1 echo | sort | xargs echo)
 
 # ===== MAIN LOOP =====
 FUNCTIONS="list nodes config fetch version quit"
-HOSTNAME=$(hostname -f 2>/dev/null || hostname)
+HOSTNAME=$( { hostname -f || hostname || cat /proc/sys/kernel/hostname || echo "unknown"; } 2>/dev/null )
 echo "# munin node at $HOSTNAME"
 while read -r arg0 arg1
 do
