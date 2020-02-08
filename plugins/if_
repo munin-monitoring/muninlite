@@ -1,6 +1,7 @@
 config_if() {
+  INTERFACE=$1
   echo "graph_order down up"
-  echo "graph_title $1 traffic"
+  echo "graph_title $INTERFACE traffic"
   echo "graph_args --base 1000"
   echo "graph_vlabel bits in (-) / out (+) per \${graph_period}"
   echo "graph_category network"
@@ -17,8 +18,8 @@ config_if() {
   echo "up.cdef up,8,*"
   if [ -n "$(which ethtool)" ]; then
 	if [ -x "$(which ethtool)" ]; then
-		if ethtool "$1" | grep -q Speed; then
-			MAX=$(($(ethtool "$1" | grep Speed | sed -e 's/[[:space:]]\{1,\}/ /g' -e 's/^ //' -e 's/M.*//' | cut -d " " -f 2) * 1000000))
+		if ethtool "$INTERFACE" | grep -q Speed; then
+			MAX=$(($(ethtool "$INTERFACE" | grep Speed | sed -e 's/[[:space:]]\{1,\}/ /g' -e 's/^ //' -e 's/M.*//' | cut -d " " -f 2) * 1000000))
     			echo "up.max $MAX"
     			echo "down.max $MAX"
 		fi
@@ -26,7 +27,8 @@ config_if() {
   fi
 }
 fetch_if() {
-  IINFO=$(grep "^ *$1:" /proc/net/dev | cut -d ":" -f 2 | sed -e 's/  */ /g' -e 's/^[ \t]*//')
+  INTERFACE=$1
+  IINFO=$(grep "^ *$INTERFACE:" /proc/net/dev | cut -d ":" -f 2 | sed -e 's/  */ /g' -e 's/^[ \t]*//')
   echo "down.value" "$(echo "$IINFO" | cut -d " " -f 1)"
   echo "up.value" "$(echo "$IINFO" | cut -d " " -f 9)"
 }

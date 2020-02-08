@@ -1,10 +1,11 @@
 config_if_err() {
+  INTERFACE=$1
   echo "graph_order rcvd trans"
-  echo "graph_title $1 errors"
+  echo "graph_title $INTERFACE errors"
   echo "graph_args --base 1000"
   echo "graph_vlabel packets in (-) / out (+) per \${graph_period}"
   echo "graph_category network"
-  echo "graph_info This graph shows the amount of errors on the $1 network interface."
+  echo "graph_info This graph shows the amount of errors on the $INTERFACE network interface."
   echo "rcvd.label packets"
   echo "rcvd.type COUNTER"
   echo "rcvd.graph no"
@@ -15,7 +16,8 @@ config_if_err() {
   echo "trans.warning 1"
 }
 fetch_if_err() {
-  IINFO=$(grep "^ *$1:" /proc/net/dev | cut -d ":" -f 2 | sed -e 's/  */ /g' -e 's/^[ \t]*//')
+  INTERFACE=$1
+  IINFO=$(grep "^ *$INTERFACE:" /proc/net/dev | cut -d ":" -f 2 | sed -e 's/  */ /g' -e 's/^[ \t]*//')
   echo "rcvd.value" "$(echo "$IINFO" | cut -d " " -f 3)"
   echo "trans.value" "$(echo "$IINFO" | cut -d " " -f 11)"
 }
