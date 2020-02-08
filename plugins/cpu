@@ -3,8 +3,8 @@ config_cpu() {
   if grep '^cpu \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\}' /proc/stat >/dev/null 2>&1; then
     extinfo="iowait irq softirq"
   fi
-  NCPU=$(($(grep '^cpu. ' /proc/stat | wc -l) - 1))
-  if [ $NCPU = 0 ]; then NCPU=1; fi
+  # shellcheck disable=SC2126
+  NCPU=$(grep '^cpu[0-9]\+ ' /proc/stat | wc -l)
   PERCENT=$(($NCPU * 100))
   graphlimit=$PERCENT
   SYSWARNING=$(($PERCENT * 30 / 100))
