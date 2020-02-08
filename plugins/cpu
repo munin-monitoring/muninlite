@@ -5,11 +5,11 @@ config_cpu() {
   fi
   # shellcheck disable=SC2126
   NCPU=$(grep '^cpu[0-9]\+ ' /proc/stat | wc -l)
-  PERCENT=$(($NCPU * 100))
+  PERCENT=$((NCPU * 100))
   graphlimit=$PERCENT
-  SYSWARNING=$(($PERCENT * 30 / 100))
-  SYSCRITICAL=$(($PERCENT * 50 / 100))
-  USRWARNING=$(($PERCENT * 80 / 100))
+  SYSWARNING=$((PERCENT * 30 / 100))
+  SYSCRITICAL=$((PERCENT * 50 / 100))
+  USRWARNING=$((PERCENT * 80 / 100))
   echo "graph_title CPU usage"
   echo "graph_order system user nice idle $extinfo" | sed 's/ $//'
   echo "graph_args --base 1000 -r --lower-limit 0 --upper-limit $graphlimit"

@@ -8,7 +8,7 @@ graph_category system"
   for ID in $(echo "$IINFO" | cut -d: -f1)
   do
     IDL=$(echo "$IINFO" | grep "^$ID:")
-    INFO=$(eval "echo \"$IDL\" | cut -d\  -f$((3+$CPUS))-")
+    INFO=$(eval "echo \"$IDL\" | cut -d ' '  -f '$((3 + CPUS))-'")
     if [ "$INFO" = "" ]; then
       echo "i$ID.label $ID"
     else
@@ -25,11 +25,11 @@ fetch_irqstats() {
   for ID in $(echo "$IINFO" | cut -d: -f1)
   do
     IDL=$(echo "$IINFO" | grep "^$ID:")
-    VALS=$(eval "echo \"$IDL\" | cut -d\  -f2-$((1+$CPUS))")
+    VALS=$(eval "echo \"$IDL\" | cut -d ' ' -f '2-$((1 + CPUS))'")
     VALUE=0
     for VAL in $VALS;
     do
-      VALUE=$(($VALUE + $VAL))
+      VALUE=$((VALUE + VAL))
     done
     echo "i$ID.value $VALUE"
   done

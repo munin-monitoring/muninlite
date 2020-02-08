@@ -67,7 +67,7 @@ config_memory() {
   if [ "$COMMITTEDAS" != "" ]; then
     echo "committed.label committed"
     echo "committed.draw LINE2"
-    echo "committed.warn" $(($SWAPTOTAL + $MEMTOTAL))
+    echo "committed.warn" $((SWAPTOTAL + MEMTOTAL))
     echo "committed.info The amount of memory that would be used if all the memory that's been allocated were to be used."
   fi
   if [ "$MAPPED" != "" ]; then
@@ -131,55 +131,55 @@ fetch_memory() {
   INACTDIRTY=$(echo "$MINFO" | grep "^Inact_dirty:" | cut -d\  -f2)
   INACTLAUNDRY=$(echo "$MINFO" | grep "^Inact_laundry:" | cut -d\  -f2)
   INACTCLEAN=$(echo "$MINFO" | grep "^Inact_clean:" | cut -d\  -f2)
-  APPS=$(($MEMTOTAL - $MEMFREE - $BUFFERS - $CACHED))
-  SWAP=$(($SWAP_TOTAL - $SWAP_FREE))
-  echo "buffers.value" $(($BUFFERS * 1024))
-  echo "swap.value" $(($SWAP * 1024))
-  echo "cached.value" $(($CACHED * 1024))
-  echo "free.value" $(($MEMFREE * 1024))
+  APPS=$((MEMTOTAL - MEMFREE - BUFFERS - CACHED))
+  SWAP=$((SWAP_TOTAL - SWAP_FREE))
+  echo "buffers.value" $((BUFFERS * 1024))
+  echo "swap.value" $((SWAP * 1024))
+  echo "cached.value" $((CACHED * 1024))
+  echo "free.value" $((MEMFREE * 1024))
   if [ "$SLAB" != "" ]; then
-    echo "slab.value" $(($SLAB * 1024))
-    APPS=$(($APPS - $SLAB))
+    echo "slab.value" $((SLAB * 1024))
+    APPS=$((APPS - SLAB))
   fi
   if [ "$SWAPCACHED" != "" ]; then
-    echo "swap_cache.value" $(($SWAPCACHED * 1024))
-    APPS=$(($APPS - $SWAPCACHED))
+    echo "swap_cache.value" $((SWAPCACHED * 1024))
+    APPS=$((APPS - SWAPCACHED))
   fi
   if [ "$PAGETABLES" != "" ]; then
-    echo "page_tables.value" $(($PAGETABLES * 1024))
-    APPS=$(($APPS - $PAGETABLES))
+    echo "page_tables.value" $((PAGETABLES * 1024))
+    APPS=$((APPS - PAGETABLES))
   fi
   if [ "$VMALLOCUSED" != "" ]; then
-    echo "vmalloc_used.value" $(($VMALLOCUSED * 1024))
-    APPS=$(($APPS - $VMALLOCUSED))
+    echo "vmalloc_used.value" $((VMALLOCUSED * 1024))
+    APPS=$((APPS - VMALLOCUSED))
   fi
   if [ "$COMMITTEDAS" != "" ]; then
-    echo "committed.value" $(($COMMITTEDAS * 1024))
+    echo "committed.value" $((COMMITTEDAS * 1024))
   fi
   if [ "$MAPPED" != "" ]; then
-    echo "mapped.value" $(($MAPPED * 1024))
+    echo "mapped.value" $((MAPPED * 1024))
   fi
   if [ "$ACTIVE" != "" ]; then
-    echo "active.value" $(($ACTIVE * 1024))
+    echo "active.value" $((ACTIVE * 1024))
   fi
   if [ "$ACTIVEANON" != "" ]; then
-    echo "active_anon.value" $(($ACTIVEANON * 1024))
+    echo "active_anon.value" $((ACTIVEANON * 1024))
   fi
   if [ "$ACTIVECACHE" != "" ]; then
-    echo "active_cache.value" $(($ACTIVECACHE * 1024))
+    echo "active_cache.value" $((ACTIVECACHE * 1024))
   fi
   if [ "$INACTIVE" != "" ]; then
-    echo "inactive.value" $(($INACTIVE * 1024))
+    echo "inactive.value" $((INACTIVE * 1024))
   fi
   if [ "$INACTDIRTY" != "" ]; then
-    echo "inact_dirty.value" $(($INACTDIRTY * 1024))
+    echo "inact_dirty.value" $((INACTDIRTY * 1024))
   fi
   if [ "$INACTLAUNDRY" != "" ]; then
-    echo "inact_laundry.value" $(($INACTLAUNDRY * 1024))
+    echo "inact_laundry.value" $((INACTLAUNDRY * 1024))
   fi
   if [ "$INACTCLEAN" != "" ]; then
-    echo "inact_clean.value" $(($INACTCLEAN * 1024))
+    echo "inact_clean.value" $((INACTCLEAN * 1024))
   fi
 
-  echo "apps.value" $(($APPS * 1024))
+  echo "apps.value" $((APPS * 1024))
 }
