@@ -11,6 +11,31 @@ MuninLite is Copyright (C) 2007 Rune Nordbøe Skillingstad
 <rune@skillingstad.no> and released under GPLv2 (see LICENSE file)
 
 
+Project scope
+-------------
+
+Muninlite is supposed to be a minimal portable and shell-based
+implementation of `munin-node`.  It provides a small set of
+essential plugins suitable for basic monitoring of a host.
+Additionally external plugins can be used.
+Only essential tools (e.g. the ones provided by busybox) should
+be required for MuninLite.
+
+
+Missing features (by design)
+----------------------------
+
+The following features of the official `munin-node` implementation
+are not included (see "Project scope" above):
+
+* no configuration per plugin
+  (e.g. environment variables or reduced privileges)
+* no host-based access control for incoming requests
+  (may be configured via `/etc/hosts.allow` or firewall rules)
+* no advanced plugin state tracking
+  (e.g. killing a plugin process after a timeout)
+
+
 Build requirements
 ------------------
 * Make
