@@ -1,10 +1,11 @@
 config_df() {
+  IGNORE_FILESYSTEM_REGEX="(none|unknown|rootfs|iso9660|squashfs|udf|romfs|ramfs|debugfs|cgroup_root|devtmpfs)"
   echo "graph_title Filesystem usage (in %)
 graph_args --upper-limit 100 -l 0
 graph_vlabel %
 graph_category disk
 graph_info This graph shows disk usage on the machine."
-  for PART in $(df -P | grep '^/' | sed '/\/[a-z0-9]*$/!d;s/.* \([a-z0-9\/]\{1,\}\)$/\1/g')
+  for PART in $(df -PT | grep '^/' | grep -vwE "$IGNORE_FILESYSTEM_REGEX" | sed '/\/[a-z0-9]*$/!d;s/.* \([a-z0-9\/]\{1,\}\)$/\1/g')
   do
     PINFO=$(df -P "$PART" | tail -1);
     PNAME=$(echo "$PINFO" | cut -d " " -f 1 | sed 's/\//_/g')
