@@ -1,10 +1,11 @@
 # MuninLite
 
-MuninLite is a single Bourne Shell script that implements the Munin
-protocoll as well as some Linux specific plugins. The motivation for
-developing MuninLite was to provide a simple Munin Node, using inetd
-on systems without a full featured Perl and/or bash or a busybox
-system.
+MuninLite is a standalone shell script that implements the Munin
+protocol and contains a few basic plugins out of the box.
+
+It can run as an inetd-based service over TCP or a simple
+executable script communicating via stdin/stdout.  The latter
+does not require root privileges.
 
 
 # Project scope
