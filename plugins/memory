@@ -1,5 +1,5 @@
 config_memory() {
-  MINFO=$(cat /proc/meminfo | sed 's/ \{1,\}/ /g;')
+  MINFO=$(sed 's/ \{1,\}/ /g;' /proc/meminfo)
   MEMTOTAL=$(echo "$MINFO" | grep "^MemTotal:" | cut -d\  -f2)
   PAGETABLES=$(echo "$MINFO" | grep "^PageTables:" | cut -d\  -f2)
   SWAPCACHED=$(echo "$MINFO" | grep "^SwapCached:" | cut -d\  -f2)
@@ -109,7 +109,7 @@ config_memory() {
   fi
 }
 fetch_memory() {
-  MINFO=$(cat /proc/meminfo | sed 's/ \{1,\}/ /g;')
+  MINFO=$(sed 's/ \{1,\}/ /g;' /proc/meminfo)
   MEMTOTAL=$(echo "$MINFO" | grep "^MemTotal:" | cut -d\  -f2)
   MEMFREE=$(echo "$MINFO" | grep "^MemFree:" | cut -d\  -f2)
   BUFFERS=$(echo "$MINFO" | grep "^Buffers:" | cut -d\  -f2)
