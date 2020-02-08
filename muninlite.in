@@ -18,7 +18,7 @@ set -eu
 
 # if plugindir_ is present in $PLUGINS, executables (scripts, binaries) in the specified path
 # and matching the pattern will be scanned and operated as plugins
-PLUGIN_DIRECTORY="$(dirname "$0")/munin-node-plugin.d"
+PLUGIN_DIRECTORY=/etc/munin/plugins
 PLUGINPATTERN="*"
 
 # Remove unwanted plugins from this list
