@@ -157,6 +157,17 @@ variable in `muninlite` and remove unwanted plugins.
 
 There is no specific configuration for plugins.
 
+
+External plugins
+----------------
+
+MuninLite includes a set of integrated plugins.  In addition it is
+possible to expose additional plugins (just like the official
+`munin-node` implementation).  By default all executables files
+(or symlinks) below the directory `/etc/munin/plugins` are treated
+as plugins.
+
+
 Munin configuration
 -------------------
 Configure your /etc/munin/munin.conf as you would for a regular
