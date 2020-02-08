@@ -17,7 +17,7 @@ $(TARGET_FILE): $(INPUT_FILE) $(PLUGIN_FILES) $(CONFIGURATION_FILE)
 	@export VERSION="$(VERSION)"; \
 		export "PLUGINS=$(PLUGINS)"; \
 		export CONF=$$(grep -v '^#' "$(CONFIGURATION_FILE)"); \
-		export PLSTR="$$(grep -vh '^#' $(PLUGIN_FILES))"; \
+		export PLSTR="$$(grep -vh '^[ \t]*#' $(PLUGIN_FILES))"; \
 		perl -p -e '\
 				s/\@\@VERSION\@\@/$$ENV{"VERSION"}/; \
 				s/\@\@CONF\@\@/$$ENV{"CONF"}/; \
