@@ -7,9 +7,6 @@ developing MuninLite was to provide a simple Munin Node, using inetd
 on systems without a full featured Perl and/or bash or a busybox
 system.
 
-MuninLite is Copyright (C) 2007 Rune Nordbøe Skillingstad
-<rune@skillingstad.no> and released under GPLv2 (see LICENSE file)
-
 
 Project scope
 -------------
@@ -188,3 +185,11 @@ service), you need to configure a transport and execute the script directly:
     address ssh://10.42.42.25/usr/local/bin/muninlite
     use_node_name yes
 ```
+
+
+License and copyright
+---------------------
+MuninLite is released under GPLv2 (see LICENSE file).
+
+Copyright (C) 2007-2011 Rune Nordbøe Skillingstad <rune@skillingstad.no>
+Copyright (C) 2019-2020 Lars Kruse <devel@sumpfralle.de>
