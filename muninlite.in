@@ -89,7 +89,8 @@ for PLUG in $PLUGINS; do
     plugindir_)
       for MYPLUGIN in $(if [ -d "$PLUGIN_DIRECTORY" ]; then find -L "$PLUGIN_DIRECTORY" -type f -name "$PLUGINPATTERN"; fi); do
         if [ -f "$MYPLUGIN" ] && [ -x "$MYPLUGIN" ]; then
-          MYPLUGINNAME=$(basename "$MYPLUGIN")
+          # generate a name suitable for shell function names
+          MYPLUGINNAME=$(basename "$MYPLUGIN" | sed 's/[^0-9a-zA-Z_]/_/g')
           # detect and avoid name collision
           if echo "$RES" | grep -qwF "$MYPLUGINNAME"; then
             MYPLUGINNAME="plugindir_$MYPLUGINNAME"
