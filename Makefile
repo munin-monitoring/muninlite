@@ -88,7 +88,7 @@ lint:
 
 .PHONY: spelling
 spelling:
-	find -name .git -prune -or -name $(DIST_DIR) -prune -or -type f | xargs codespell
+	@find -name .git -prune -or -name $(DIST_DIR) -prune -or -type f -print | xargs codespell
 
 .PHONY: test
 test: $(TARGET_FILE)
