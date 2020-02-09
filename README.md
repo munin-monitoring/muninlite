@@ -190,5 +190,5 @@ service), you need to configure a transport and execute the script directly:
 
 MuninLite is released under GPLv2 (see LICENSE file).
 
-Copyright (C) 2007-2011 Rune Nordbøe Skillingstad <rune@skillingstad.no>
-Copyright (C) 2019-2020 Lars Kruse <devel@sumpfralle.de>
+* Copyright (C) 2007-2011 Rune Nordbøe Skillingstad <rune@skillingstad.no>
+* Copyright (C) 2019-2020 Lars Kruse <devel@sumpfralle.de>
