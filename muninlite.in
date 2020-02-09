@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Simple Bourne Shell script that implements Munin protocoll and
+# Simple Bourne Shell script that implements Munin protocol and
 # some common Linux plugins.
 #
 # For latest version, see http://muninlite.sf.net/

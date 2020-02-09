@@ -124,7 +124,7 @@ help
 list
 df cpu if_eth0 if_eth1 if_err_eth0 if_err_eth1 load memory
 version
-munins node on mose.medisin.ntnu.no version: 0.0.5 (munin-lite)
+munins node on example.org version: 0.0.5 (munin-lite)
 quit
 ```
 
@@ -140,7 +140,7 @@ help
 list
 df cpu if_eth0 if_eth1 if_err_eth0 if_err_eth1 load memory
 version
-munins node on mose.medisin.ntnu.no version: 0.0.5 (munin-lite)
+munins node on example.org version: 0.0.5 (munin-lite)
 quit
 Connection closed by foreign host.
 ```
