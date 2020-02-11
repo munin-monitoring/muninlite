@@ -1,7 +1,7 @@
 # MuninLite
 
-MuninLite is a standalone shell script that implements the Munin
-protocol and contains a few basic plugins out of the box.
+MuninLite is a standalone shell script implementing the Munin
+protocol and containing a few basic plugins out of the box.
 
 It can run as an inetd-based service over TCP or a simple
 executable script communicating via stdin/stdout.  The latter
