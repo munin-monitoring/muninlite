@@ -1,3 +1,17 @@
+# [2.0.0] - 2020-02-12
+
+* change plugin path to `/etc/munin/plugins`
+  (previously: `munin-node-plugin.d` next to the muninlite script)
+* change name of standalone script from "munin-node" to "muninlite"
+* various improvements of most plugins
+* add checks for code style and spelling
+* rework Makefile
+* import patches from [Opennet Initiative](https://opennet-initiative.de/)
+* import patches from [OpenWrt](https://openwrt.org/)
+* move project hosting to the "munin" organization in github
+  (https://github.com/munin-monitoring/muninlite)
+
+
 # [1.0.4] - 2011-01-27
 
 * `munin-node.conf`: Forget the previous change
