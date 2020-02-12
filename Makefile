@@ -8,8 +8,8 @@ VERSION ?= $(shell cat VERSION)
 DIST_DIR = releases
 DESTDIR ?= /usr/local/bin
 TGZ_FILE ?= $(DIST_DIR)/muninlite-$(VERSION).tar.gz
-TGZ_FILE_CHECKSUM ?= $(TGZ_FILE).sha256sum
 TGZ_FILE_SIGNATURE ?= $(TGZ_FILE).asc
+SIGN_KEY_NAME ?= $(shell git show --no-patch --format=%ae)
 
 
 $(TARGET_FILE): $(INPUT_FILE) $(PLUGIN_FILES) $(CONFIGURATION_FILE)
@@ -67,11 +67,8 @@ $(TGZ_FILE):
 	git archive --prefix=muninlite-$(VERSION)/ --format=tar --output "$@.tmp" HEAD
 	mv "$@.tmp" "$@"
 
-$(TGZ_FILE_CHECKSUM): $(TGZ_FILE)
-	sha256sum "$<" >"$@"
-
-$(TGZ_FILE_SIGNATURE): $(TGZ_FILE_CHECKSUM)
-	gpg --armor --detach-sign --sign "$<"
+$(TGZ_FILE_SIGNATURE): $(TGZ_FILE)
+	gpg --armor --detach-sign --sign --local-user="$(SIGN_KEY_NAME)" "$<"
 
 .PHONY: dist
 dist: $(TGZ_FILE_SIGNATURE)
