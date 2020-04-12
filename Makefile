@@ -64,7 +64,7 @@ clean-all: clean-node clean-dist
 $(TGZ_FILE):
 	@echo "Building $@ ..."
 	@mkdir -p "$(dir $(@))"
-	git archive --prefix=muninlite-$(VERSION)/ --format=tar --output "$@.tmp" HEAD
+	git archive --prefix=muninlite-$(VERSION)/ --format=tar.gz --output "$@.tmp" HEAD
 	mv "$@.tmp" "$@"
 
 $(TGZ_FILE_SIGNATURE): $(TGZ_FILE)
