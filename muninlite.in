@@ -75,7 +75,7 @@ for PLUG in $PLUGINS; do
     if_|if_err_)
       interface_names=$(grep -E '^ *(ppp|eth|wlan|ath|ra|ipsec|tap|br-)[^:]{1,}:' /proc/net/dev | sed 's/^ *//; s/:.*$//')
       for INTER in $interface_names; do
-        INTERRES=$(echo "$INTER" | sed -e 's/\./VLAN/' -e 's/\-/_/')
+        INTERRES=$(echo "$INTER" | sed -e 's/\./VLAN/' -e 's/\-/_/g')
         RES="$RES ${PLUG}${INTERRES}"
         eval "fetch_${PLUG}${INTERRES}() { 'fetch_${PLUG%_}' '$INTER'; }"
         eval "config_${PLUG}${INTERRES}() { 'config_${PLUG%_}' '$INTER'; }"
