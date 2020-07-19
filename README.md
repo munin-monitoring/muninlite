@@ -115,7 +115,7 @@ iptables -A INPUT -p tcp --dport munin --source 10.42.42.25 -j ACCEPT
 
 ## Test
 
-To test the script, just run it (`/usr/bin/local/muninlite`):
+To test the script, just run it (`/usr/local/bin/muninlite`):
 ```shell
 $ /usr/local/bin/muninlite
 # munin node at localhost.localdomain
