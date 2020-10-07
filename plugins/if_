@@ -1,7 +1,7 @@
 config_if() {
   INTERFACE=$1
   echo "graph_order down up"
-  echo "graph_title $INTERFACE traffic"
+  echo "graph_title Interface $INTERFACE traffic"
   echo "graph_args --base 1000"
   echo "graph_vlabel bits in (-) / out (+) per \${graph_period}"
   echo "graph_category network"
