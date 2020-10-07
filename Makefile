@@ -1,4 +1,4 @@
-PLUGINS ?= df cpu if_ if_err_ load memory processes swap netstat uptime interrupts irqstats ntpdate plugindir_
+PLUGINS ?= df cpu if_ if_err_ load memory processes swap netstat uptime interrupts irqstats ntpdate wireless plugindir_
 CONFIGURATION_FILE ?= muninlite.conf
 INPUT_FILE ?= muninlite.in
 TARGET_FILE ?= muninlite

@@ -1,0 +1,38 @@
+config_wireless() {
+  interfaces=$(iwinfo 2> /dev/null | sed '/^wlan/!d; s/ .*//g; /-/d')
+  for interface in ${interfaces}
+  do
+    echo "multigraph wireless_${interface}
+graph_title WLAN ${interface} AP Statistics
+graph_vlabel Strength (dBm)
+graph_category network
+graph_scale no
+signal.label Signal
+noise.label Noise"
+  done
+  interfaces=$(iwinfo 2> /dev/null | sed '/^wlan/!d; s/ .*//g')
+  for interface in ${interfaces}
+  do
+    echo "multigraph wireless_assoc_${interface/-/_}
+graph_title WLAN ${interface} associations
+graph_vlabel Clients
+graph_args --lower-limit 0
+graph_category network
+graph_scale no
+clients.label Clients"
+  done
+}
+fetch_wireless() {
+  interfaces=$(iwinfo 2> /dev/null | sed '/^wlan/!d; s/ .*//g; /-/d')
+  for interface in ${interfaces}
+  do
+    echo "multigraph wireless_${interface}"
+    iwinfo ${interface} info | sed -r 's/unknown/0 dBm/g; /Signal.*Noise/!d; s/^.* Signal: ([-0-9]+) dBm  Noise: ([-0-9]+) dBm/signal.value \1\nnoise.value \2/'
+  done
+  interfaces=$(iwinfo 2> /dev/null | sed '/^wlan/!d; s/ .*//g')
+  for interface in ${interfaces}
+  do
+    echo "multigraph wireless_assoc_${interface/-/_}"
+    echo "clients.value $(iwinfo ${interface} assoc | grep -c SNR)"
+  done
+}
