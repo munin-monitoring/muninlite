@@ -7,7 +7,7 @@ graph_info This graph shows disk usage on the machine."
   for PART in $(df -PT | grep '^/' | grep -vwE "$DF_IGNORE_FILESYSTEM_REGEX" | sed '/\/[a-z0-9]*$/!d;s/.* \([a-z0-9\/]\{1,\}\)$/\1/g')
   do
     PINFO=$(df -P "$PART" | tail -1);
-    PNAME=$(clean_fieldname $(echo "$PINFO" | cut -d " " -f 1))
+    PNAME=$(clean_fieldname "$(echo "$PINFO" | cut -d " " -f 1)")
     echo "$PNAME.label $PART"
     echo "$PNAME.info $PNAME -> $PART"
     echo "$PNAME.warning 92"
@@ -18,7 +18,7 @@ fetch_df() {
   for PART in $(df -PT | grep '^/' | grep -vwE "$DF_IGNORE_FILESYSTEM_REGEX" | sed '/\/[a-z0-9]*$/!d;s/.* \([a-z0-9\/]\{1,\}\)$/\1/g')
   do
     PINFO=$(df -P "$PART" | tail -1);
-    PNAME=$(clean_fieldname $(echo "$PINFO" | cut -d " " -f 1))
+    PNAME=$(clean_fieldname "$(echo "$PINFO" | cut -d " " -f 1)")
     echo "$PNAME.value" "$(echo "$PINFO" | sed -e 's/\%//g' -e 's/  */ /g' | cut -d " " -f 5)"
   done
 }
