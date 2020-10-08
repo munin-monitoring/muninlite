@@ -150,10 +150,22 @@ Connection closed by foreign host.
 
 ## Plugin configuration
 
-To configure which plugins should be enabled, locate the `PLUGINS`
-variable in `muninlite` and remove unwanted plugins.
+MuninLite does not support explicit configurations per plugin
+(as `munin-node` does).
 
-There is no specific configuration for plugins.
+But the file `/etc/munin/muninlite.conf` (if it exists) is sourced
+as a shell script during the execution of MuninLite.
+
+This optional configuration file allows a variety of customizations:
+
+* override integrated plugins
+  (by redefining their functions, e.g. `config_if` and `fetch_if`)
+* disable integrated plugins (e.g. `PLUGINS=${PLUGINS/ wireless / }`)
+* overwrite configuration variables for integrated plugins
+  (e.g. `NTP_PEER` or `DF_IGNORE_FILESYSTEM_REGEX`)
+* specify configuration settings required for external plugins
+  (provided in `/etc/munin/plugins/`):
+  `export FOO_SERVICE=http://localhost:7123`
 
 
 ## External plugins
@@ -192,3 +204,4 @@ MuninLite is released under GPLv2 (see LICENSE file).
 
 * Copyright (C) 2007-2011 Rune Nordbøe Skillingstad <rune@skillingstad.no>
 * Copyright (C) 2019-2020 Lars Kruse <devel@sumpfralle.de>
+* Copyright (C) 2020 Kim B. Heino <b@bbbs.net>
