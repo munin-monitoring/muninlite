@@ -1,3 +1,13 @@
+# [2.1.0] - 2020-10-08
+
+* if_: handle "Unknown" emitted by ethtool
+* if: include "Interface" to graph_title for better grouping
+* muninlite: do not crash if empty line is received
+* df: fix "config" vs "fetch" mismatches
+* new plugin "wireless" (based on `iwinfo`, suitable for OpenWrt)
+* add support for optional configuration file `/etc/munin/muninlite.conf`
+
+
 # [2.0.1] - 2020-04-12
 
 * network interface names: tolerate more than one hyphen
