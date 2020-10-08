@@ -1,16 +1,16 @@
 config_wireless() {
-  interfaces=$(iwinfo 2> /dev/null | sed '/^wlan/!d; s/ .*//g; /-/d')
-  for interface in ${interfaces}
+  interfaces=$(iwinfo 2> /dev/null | sed '/^[a-zA-Z]/!d; s/ .*//')
+  radios=$(echo "${interfaces}" | sed '/-/d')
+  for radio in ${radios}
   do
-    echo "multigraph wireless_${interface}
-graph_title WLAN ${interface} AP Statistics
+    echo "multigraph wireless_${radio}
+graph_title WLAN ${radio} AP Statistics
 graph_vlabel Strength (dBm)
 graph_category network
 graph_scale no
 signal.label Signal
 noise.label Noise"
   done
-  interfaces=$(iwinfo 2> /dev/null | sed '/^wlan/!d; s/ .*//g')
   for interface in ${interfaces}
   do
     echo "multigraph wireless_assoc_$(clean_fieldname "${interface}")
@@ -23,13 +23,13 @@ clients.label Clients"
   done
 }
 fetch_wireless() {
-  interfaces=$(iwinfo 2> /dev/null | sed '/^wlan/!d; s/ .*//g; /-/d')
-  for interface in ${interfaces}
+  interfaces=$(iwinfo 2> /dev/null | sed '/^[a-zA-Z]/!d; s/ .*//')
+  radios=$(echo "${interfaces}" | sed '/-/d')
+  for radio in ${radios}
   do
-    echo "multigraph wireless_${interface}"
-    iwinfo "${interface}" info | sed -r 's/unknown/0 dBm/g; /Signal.*Noise/!d; s/^.* Signal: ([-0-9]+) dBm  Noise: ([-0-9]+) dBm/signal.value \1\nnoise.value \2/'
+    echo "multigraph wireless_${radio}"
+    iwinfo "${radio}" info | sed -r 's/unknown/0 dBm/g; /Signal.*Noise/!d; s/^.* Signal: ([-0-9]+) dBm  Noise: ([-0-9]+) dBm/signal.value \1\nnoise.value \2/'
   done
-  interfaces=$(iwinfo 2> /dev/null | sed '/^wlan/!d; s/ .*//g')
   for interface in ${interfaces}
   do
     echo "multigraph wireless_assoc_$(clean_fieldname "${interface}")"
