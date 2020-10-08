@@ -16,6 +16,9 @@ set -eu
 
 @@CONF@@
 
+# Name of runtime configuration file
+CONFIG_FILE=/etc/munin/muninlite.conf
+
 # if plugindir_ is present in $PLUGINS, executables (scripts, binaries) in the specified path
 # and matching the pattern will be scanned and operated as plugins
 PLUGIN_DIRECTORY=/etc/munin/plugins
@@ -69,6 +72,7 @@ do_quit() {
 }
 
 # ===== Runtime config =====
+[ -f ${CONFIG_FILE} ] && . ${CONFIG_FILE}
 RES=""
 for PLUG in $PLUGINS; do
   case "$PLUG" in
