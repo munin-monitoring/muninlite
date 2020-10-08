@@ -86,6 +86,11 @@ for PLUG in $PLUGINS; do
         RES="$RES netstat"
       fi
       ;;
+    wireless)
+      if iwinfo >/dev/null 2>&1; then
+          RES="${RES} ${PLUG}"
+      fi
+      ;;
     plugindir_)
       for MYPLUGIN in $(if [ -d "$PLUGIN_DIRECTORY" ]; then find -L "$PLUGIN_DIRECTORY" -type f -name "$PLUGINPATTERN"; fi); do
         if [ -f "$MYPLUGIN" ] && [ -x "$MYPLUGIN" ]; then

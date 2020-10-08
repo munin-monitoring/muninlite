@@ -1,0 +1,38 @@
+config_wireless() {
+  interfaces=$(iwinfo 2> /dev/null | sed '/^[a-zA-Z]/!d; s/ .*//')
+  radios=$(echo "${interfaces}" | sed '/-/d')
+  for radio in ${radios}
+  do
+    echo "multigraph wireless_${radio}
+graph_title WLAN ${radio} AP Statistics
+graph_vlabel Strength (dBm)
+graph_category network
+graph_scale no
+signal.label Signal
+noise.label Noise"
+  done
+  for interface in ${interfaces}
+  do
+    echo "multigraph wireless_assoc_$(clean_fieldname "${interface}")
+graph_title WLAN ${interface} associations
+graph_vlabel Clients
+graph_args --lower-limit 0
+graph_category network
+graph_scale no
+clients.label Clients"
+  done
+}
+fetch_wireless() {
+  interfaces=$(iwinfo 2> /dev/null | sed '/^[a-zA-Z]/!d; s/ .*//')
+  radios=$(echo "${interfaces}" | sed '/-/d')
+  for radio in ${radios}
+  do
+    echo "multigraph wireless_${radio}"
+    iwinfo "${radio}" info | sed -r 's/unknown/0 dBm/g; /Signal.*Noise/!d; s/^.* Signal: ([-0-9]+) dBm  Noise: ([-0-9]+) dBm/signal.value \1\nnoise.value \2/'
+  done
+  for interface in ${interfaces}
+  do
+    echo "multigraph wireless_assoc_$(clean_fieldname "${interface}")"
+    echo "clients.value $(iwinfo "${interface}" assoc | grep -c SNR)"
+  done
+}
