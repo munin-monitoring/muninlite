@@ -72,6 +72,7 @@ do_quit() {
 }
 
 # ===== Runtime config =====
+# shellcheck source=/dev/null
 [ -f ${CONFIG_FILE} ] && . ${CONFIG_FILE}
 RES=""
 for PLUG in $PLUGINS; do
