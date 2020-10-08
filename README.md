@@ -10,7 +10,7 @@ does not require root privileges.
 
 # Project scope
 
-Muninlite is supposed to be a minimal portable and shell-based
+MuninLite is supposed to be a minimal portable and shell-based
 implementation of `munin-node`.  It provides a small set of
 essential plugins suitable for basic monitoring of a host.
 Additionally external plugins can be used.
@@ -124,11 +124,11 @@ help
 list
 df cpu if_eth0 if_eth1 if_err_eth0 if_err_eth1 load memory
 version
-munins node on example.org version: 0.0.5 (munin-lite)
+munins node on example.org version: 0.0.5 (muninlite)
 quit
 ```
 
-For inetd-test, try to telnet to munin port from allowed host.
+An (x)inetd setup can be tested via telnet or netcat:
 ```shell
 # telnet localhost 4949
 Trying 127.0.0.1...
@@ -140,7 +140,7 @@ help
 list
 df cpu if_eth0 if_eth1 if_err_eth0 if_err_eth1 load memory
 version
-munins node on example.org version: 0.0.5 (munin-lite)
+munins node on example.org version: 0.0.5 (muninlite)
 quit
 Connection closed by foreign host.
 ```
@@ -179,8 +179,8 @@ as plugins.
 
 ## Munin master configuration
 
-Configure your /etc/munin/munin.conf as you would for a regular
-`muninnode`, if you configured MuninLite as a TCP service (e.g. via
+Configure /etc/munin/munin.conf on you munin master as you would for a regular
+`munin-node`. If you configured MuninLite as a TCP service (e.g. via
 inetd/xinetd):
 
 ```
@@ -196,6 +196,9 @@ service), you need to configure a transport and execute the script directly:
     address ssh://10.42.42.25/usr/local/bin/muninlite
     use_node_name yes
 ```
+
+The ssh transport obviously requires the use of `authorized_keys` on
+the host running MuninLite.
 
 
 # License and copyright

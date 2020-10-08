@@ -11,3 +11,9 @@ git commit -m "Release $new_version" VERSION Changelog.md
 git tag -s "$new_version" -m "$new_version"
 make dist
 ```
+
+## Downstream: OpenWrt
+
+Update the
+[release references](https://github.com/openwrt/packages/blob/master/admin/muninlite/Makefile)
+in OpenWrt.
