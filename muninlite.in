@@ -78,7 +78,7 @@ RES=""
 for PLUG in $PLUGINS; do
   case "$PLUG" in
     if_|if_err_)
-      interface_names=$(grep -E '^ *(ppp|eth|wlan|ath|ra|ipsec|tap|br-)[^:]{1,}:' /proc/net/dev | sed 's/^ *//; s/:.*$//')
+      interface_names=$(sed 's/^ *//; s/:.*$//; / /d; /^lo$/d' /proc/net/dev)
       for INTER in $interface_names; do
         INTERRES=$(echo "$INTER" | sed -e 's/\./VLAN/' -e 's/\-/_/g')
         RES="$RES ${PLUG}${INTERRES}"
