@@ -29,7 +29,9 @@ fetch_irqstats() {
     VALUE=0
     for VAL in $VALS;
     do
-      VALUE=$((VALUE + $VAL))
+      if [ "$VAL" -eq "$VAL" ] 2> /dev/null; then
+        VALUE=$((VALUE + VAL))
+      fi
     done
     echo "i$ID.value $VALUE"
   done
