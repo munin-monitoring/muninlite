@@ -29,7 +29,7 @@ fetch_irqstats() {
     VALUE=0
     for VAL in $VALS;
     do
-      VALUE=$((VALUE + VAL))
+      VALUE=$((VALUE + $VAL))
     done
     echo "i$ID.value $VALUE"
   done
