@@ -3,9 +3,7 @@ config_ntpdate() {
   echo "graph_args --base 1000 --vertical-label msec"
   echo "graph_category time"
   echo "offset.label Offset"
-  echo "offset.draw LINE2"
   echo "delay.label Delay"
-  echo "delay.draw LINE2"
 }
 
 fetch_ntpdate() {

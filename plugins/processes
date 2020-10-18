@@ -5,7 +5,6 @@ config_processes() {
   echo "graph_category processes"
   echo "graph_info This graph shows the number of processes in the system."
   echo "processes.label processes"
-  echo "processes.draw LINE2"
   echo "processes.info The current number of processes."
 }
 fetch_processes() {
