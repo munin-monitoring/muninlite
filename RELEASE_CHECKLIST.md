@@ -11,6 +11,13 @@ git commit -m "Release $new_version" VERSION Changelog.md
 git tag -s "$new_version" -m "$new_version"
 make dist
 ```
+3. push the commits (and the tag) to github:
+```shell
+git push --tags
+```
+4. attach the locally generated release archive and the signature to the
+   [new release](https://github.com/munin-monitoring/muninlite/releases/)
+
 
 ## Downstream: OpenWrt
 
