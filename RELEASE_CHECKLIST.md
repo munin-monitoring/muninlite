@@ -24,4 +24,7 @@ git push --tags
 
 Update the
 [release references](https://github.com/openwrt/packages/blob/master/admin/muninlite/Makefile)
-in OpenWrt.
+in OpenWrt:
+
+1. Update version number and sha256 of tar.gz ([example](https://github.com/openwrt/packages/pull/13717/commits/0f4db441b82a257252b775b1fee6de1737295bdc))
+2. Open new pull request ([example](https://github.com/openwrt/packages/pull/13717))
