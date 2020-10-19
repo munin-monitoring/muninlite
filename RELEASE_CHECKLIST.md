@@ -13,6 +13,7 @@ make dist
 ```
 3. push the commits (and the tag) to github:
 ```shell
+git push
 git push --tags
 ```
 4. attach the locally generated release archive and the signature to the
