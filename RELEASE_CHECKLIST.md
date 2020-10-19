@@ -20,11 +20,19 @@ git push --tags
    [new release](https://github.com/munin-monitoring/muninlite/releases/)
 
 
-## Downstream: OpenWrt
+# Downstream notifications
 
-Update the
-[release references](https://github.com/openwrt/packages/blob/master/admin/muninlite/Makefile)
-in OpenWrt:
+## OpenWrt
 
-1. Update version number and sha256 of tar.gz ([example](https://github.com/openwrt/packages/pull/13717/commits/0f4db441b82a257252b775b1fee6de1737295bdc))
-2. Open new pull request ([example](https://github.com/openwrt/packages/pull/13717))
+The following minimal set of changes is applicable only, if no incompatible changes
+(e.g. new filenames) are introduced in this release.
+
+1. update the
+   [release references](https://github.com/openwrt/packages/blob/master/admin/muninlite/Makefile)
+   in OpenWrt:
+    * `PKG_VERSION`: the new muninlite version
+    * `PKG_HASH`: `sha256sum` of the release archive (`.tar.gz`)
+    * see [example](https://github.com/openwrt/packages/pull/13717/commits/0f4db441b82a257252b775b1fee6de1737295bdc)
+2. create a pull request:
+    * the commit needs to contain a `Signed-off-by: NAME <MAIL_ADDRESS>` line (`git commit --signoff`)
+    * see [example](https://github.com/openwrt/packages/pull/13717)
