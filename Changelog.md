@@ -1,3 +1,11 @@
+# [2.1.1] - 2020-10-19
+
+* muninlite: do not hardcode accepted network interface names
+* irqstats: fix irqstats on Raspberry Pi
+* ntpdate: add missing "graph_category time" to config section
+* processes, ntpdate: draw graphs with normal 1px lines
+
+
 # [2.1.0] - 2020-10-08
 
 * if_: handle "Unknown" emitted by ethtool
