@@ -1,8 +1,10 @@
 config_cpu() {
   extinfo=""
-  if grep -q '^cpu \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\}' /proc/stat; then
-    extinfo="iowait irq softirq"
-  fi
+  fields=$(grep '^cpu ' /proc/stat | wc -w)
+  if [ "$fields" -gt 5 ]; then extinfo="$extinfo iowait irq softirq"; fi
+  if [ "$fields" -gt 8 ]; then extinfo="$extinfo steal"; fi
+  if [ "$fields" -gt 9 ]; then extinfo="$extinfo guest"; fi
+  if [ "$fields" -gt 10 ]; then extinfo="$extinfo guest_nice"; fi
   # shellcheck disable=SC2126
   NCPU=$(grep '^cpu[0-9]\+ ' /proc/stat | wc -l)
   PERCENT=$((NCPU * 100))
@@ -45,7 +47,7 @@ config_cpu() {
   echo "idle.max 5000"
   echo "idle.type DERIVE"
   echo "idle.info Idle CPU time"
-  if [ -n "$extinfo" ]; then
+  if [ "$fields" -gt 5 ]; then
     echo "iowait.label iowait"
     echo "iowait.draw STACK"
     echo "iowait.min 0"
@@ -65,20 +67,50 @@ config_cpu() {
     echo "softirq.type DERIVE"
     echo "softirq.info CPU time spent handling 'batched' interrupts"
   fi
+  if [ "$fields" -gt 8 ]; then
+    echo "steal.label steal"
+    echo "steal.draw STACK"
+    echo "steal.min 0"
+    echo "steal.max 5000"
+    echo "steal.type DERIVE"
+    echo "steal.info The time that a virtual CPU had runnable tasks, but the virtual CPU itself was not running"
+  fi
+  if [ "$fields" -gt 9 ]; then
+    echo "guest.label guest"
+    echo "guest.draw STACK"
+    echo "guest.min 0"
+    echo "guest.max 5000"
+    echo "guest.type DERIVE"
+    echo "guest.info The time spent running a virtual CPU for guest operating systems"
+  fi
+  if [ "$fields" -gt 10 ]; then
+    echo "guest_nice.label guest_nice"
+    echo "guest_nice.draw STACK"
+    echo "guest_nice.min 0"
+    echo "guest_nice.max 5000"
+    echo "guest_nice.type DERIVE"
+    echo "guest_nice.info The time spent running a virtual CPU for a niced guest operating system"
+  fi
 }
 fetch_cpu() {
-  extinfo=""
-  if grep -q '^cpu \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\} \{1,\}[0-9]\{1,\}' /proc/stat; then
-    extinfo="iowait irq softirq"
-  fi
+  fields=$(grep '^cpu ' /proc/stat | wc -w)
   CINFO=$(grep '^cpu ' /proc/stat | cut -c6-)
   echo "user.value" "$(echo "$CINFO" | cut -d " " -f 1)"
   echo "nice.value" "$(echo "$CINFO" | cut -d " " -f 2)"
   echo "system.value" "$(echo "$CINFO" | cut -d " " -f 3)"
   echo "idle.value" "$(echo "$CINFO" | cut -d " " -f 4)"
-  if [ -n "$extinfo" ]; then
+  if [ "$fields" -gt 5 ]; then
     echo "iowait.value" "$(echo "$CINFO" | cut -d " " -f 5)"
     echo "irq.value" "$(echo "$CINFO" | cut -d " " -f 6)"
     echo "softirq.value" "$(echo "$CINFO" | cut -d " " -f 7)"
+  fi
+  if [ "$fields" -gt 8 ]; then
+    echo "steal.value" "$(echo "$CINFO" | cut -d " " -f 8)"
+  fi
+  if [ "$fields" -gt 9 ]; then
+    echo "guest.value" "$(echo "$CINFO" | cut -d " " -f 9)"
+  fi
+  if [ "$fields" -gt 10 ]; then
+    echo "guest_nice.value" "$(echo "$CINFO" | cut -d " " -f 10)"
   fi
 }
