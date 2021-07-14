@@ -125,9 +125,9 @@ HOSTNAME=$( { hostname -f || hostname || cat /proc/sys/kernel/hostname || echo "
 echo "# munin node at $HOSTNAME"
 while read -r arg0 arg1
 do
-  arg0=$(echo "$arg0" | xargs)
-  arg1=$(echo "$arg1" | xargs)
-  if ! echo "$FUNCTIONS" | grep -qwF "$arg0"; then
+  arg0=$(printf '%s\n' "$arg0" | xargs)
+  arg1=$(printf '%s\n' "$arg1" | xargs)
+  if ! echo "$FUNCTIONS" | grep -qwF -- "$arg0"; then
     echo "# Unknown command. Try $(echo "$FUNCTIONS" | sed -e 's/\( [[:alpha:]]\{1,\}\)/,\1/g' -e 's/,\( [[:alpha:]]\{1,\}\)$/ or\1/')"
   elif [ -n "$arg0" ]; then
     "do_$arg0" "$arg1"
