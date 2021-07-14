@@ -1,3 +1,9 @@
+# [2.1.2] - 2021-07-14
+
+* handle tokens with leading hyphens carefully
+* do not ignore `DF_IGNORE_FILESYSTEM_REGEX` during build
+
+
 # [2.1.1] - 2020-10-19
 
 * muninlite: do not hardcode accepted network interface names
