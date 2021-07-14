@@ -18,7 +18,7 @@ $(TARGET_FILE): $(INPUT_FILE) $(PLUGIN_FILES) $(CONFIGURATION_FILE)
 		echo "Adding plugin $$(basename "$$plugin_filename")"; done
 	@export VERSION="$(VERSION)"; \
 		export "PLUGINS=$(PLUGINS)"; \
-		export CONF=$$(grep -v '^#' "$(CONFIGURATION_FILE)"); \
+		export CONF="$$(grep -v '^#' "$(CONFIGURATION_FILE)")"; \
 		export PLSTR="$$(grep -vh '^[ \t]*#' $(PLUGIN_FILES))"; \
 		perl -p -e '\
 				s/\@\@VERSION\@\@/$$ENV{"VERSION"}/; \
