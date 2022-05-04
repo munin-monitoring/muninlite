@@ -11,7 +11,7 @@ fetch_ntpdate() {
   OFFSET=0
   DELAY=0
   if [ -n "$NTP_PEER" ] && [ -x "$NTPDATE" ]; then
-    DATA=$("$NTPDATE" -q "$NTP_PEER" | awk '/^server.*offset/{gsub(/,/,""); printf "%s %s", ($6*1000), ($8*1000);}')
+    DATA=$("$NTPDATE" -q "$NTP_PEER" | awk '/^server.*offset/{gsub(/,/,""); printf "%s %s", ($6*1000), ($8*1000); exit;}')
     OFFSET=$(echo "$DATA" | cut -d " " -f 1)
     DELAY=$(echo "$DATA" | cut -d " " -f 2)
   fi
