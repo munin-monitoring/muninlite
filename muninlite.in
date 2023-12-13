@@ -78,7 +78,7 @@ RES=""
 for PLUG in $PLUGINS; do
   case "$PLUG" in
     if_|if_err_)
-      if [ -z "$INTERFACE_NAMES_OVERRIDE" ]; then
+      if [ -z "${INTERFACE_NAMES_OVERRIDE:-}" ]; then
         interface_names=$(sed 's/^ *//; s/:.*$//; / /d; /^lo$/d' /proc/net/dev)
       else
         interface_names="$INTERFACE_NAMES_OVERRIDE"
