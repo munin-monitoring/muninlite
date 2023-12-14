@@ -6,7 +6,7 @@ graph_category disk
 graph_info This graph shows disk usage on the machine."
   df -PT | grep '^/' | grep -vwE "$DF_IGNORE_FILESYSTEM_REGEX" | while read dev type blocks used avail pct mp
   do
-    PNAME=$(clean_fieldname "$dev")
+    PNAME=$(clean_fieldname "$mp")
     echo "$PNAME.label $mp"
     echo "$PNAME.info $dev -> $mp"
     echo "$PNAME.warning 92"
@@ -16,7 +16,7 @@ graph_info This graph shows disk usage on the machine."
 fetch_df() {
   df -PT | grep '^/' | grep -vwE "$DF_IGNORE_FILESYSTEM_REGEX" | while read dev type blocks used avail pct mp
   do
-    PNAME=$(clean_fieldname "$dev")
+    PNAME=$(clean_fieldname "$mp")
     echo "$PNAME.value" "${pct%\%}"
   done
 }
