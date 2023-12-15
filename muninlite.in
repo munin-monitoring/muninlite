@@ -78,7 +78,11 @@ RES=""
 for PLUG in $PLUGINS; do
   case "$PLUG" in
     if_|if_err_)
-      interface_names=$(sed 's/^ *//; s/:.*$//; / /d; /^lo$/d' /proc/net/dev)
+      if [ -z "${INTERFACE_NAMES_OVERRIDE:-}" ]; then
+        interface_names=$(sed 's/^ *//; s/:.*$//; / /d; /^lo$/d' /proc/net/dev)
+      else
+        interface_names="$INTERFACE_NAMES_OVERRIDE"
+      fi
       for INTER in $interface_names; do
         INTERRES=$(echo "$INTER" | sed -e 's/\./VLAN/' -e 's/\-/_/g')
         RES="$RES ${PLUG}${INTERRES}"
