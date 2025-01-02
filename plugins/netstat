@@ -31,10 +31,52 @@ config_netstat() {
   echo "established.info The number of currently open connections."
 }
 fetch_netstat() {
-  NINFO=$(netstat -s | sed 's/ \{1,\}/ /g')
-  echo "active.value" "$(echo "$NINFO" | grep "active connection" | cut -d " " -f 2)"
-  echo "passive.value" "$(echo "$NINFO" | grep "passive connection" | cut -d " " -f 2)"
-  echo "failed.value" "$(echo "$NINFO" | grep "failed connection" | cut -d " " -f 2)"
-  echo "resets.value" "$(echo "$NINFO" | grep "connection resets" | cut -d " " -f 2)"
-  echo "established.value" "$(echo "$NINFO" | grep "connections established" | cut -d " " -f 2)"
+  awk '
+    BEGIN {
+      TcpNR = -1
+      ActiveOpens = -1
+      PassiveOpens = -1
+      AttemptFails = -1
+      EstabResets = -1
+      CurrEstab = -1
+    }
+
+    /^Tcp: / {
+      if (++TcpNR == 0) {
+        for (i = 1; i <= NF; i++) {
+          if ($i == "ActiveOpens") {
+            ActiveOpens = i
+          } else if ($i == "PassiveOpens") {
+            PassiveOpens = i
+          } else if ($i == "AttemptFails") {
+            AttemptFails = i
+          } else if ($i == "EstabResets") {
+            EstabResets = i
+          } else if ($i == "CurrEstab") {
+            CurrEstab = i
+          }
+        }
+      } else if (TcpNR == 1) {
+        if (ActiveOpens < 1 || PassiveOpens < 1 || AttemptFails < 1 || EstabResets < 1 || CurrEstab < 1) {
+          TcpNR = -1
+        } else {
+          print "active.value " $ActiveOpens
+          print "passive.value " $PassiveOpens
+          print "failed.value " $AttemptFails
+          print "resets.value " $EstabResets
+          print "established.value " $CurrEstab
+        }
+      }
+    }
+
+    END {
+      if (TcpNR < 1) {
+        print "active.value 0"
+        print "passive.value 0"
+        print "failed.value 0"
+        print "resets.value 0"
+        print "established.value 0"
+      }
+    }
+  ' /proc/net/snmp
 }
