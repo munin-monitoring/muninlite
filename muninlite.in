@@ -87,7 +87,7 @@ for PLUG in $PLUGINS; do
       done
       ;;
     netstat)
-      if netstat -s >/dev/null 2>&1; then
+      if [ -f /proc/net/snmp ]; then
         RES="$RES netstat"
       fi
       ;;
