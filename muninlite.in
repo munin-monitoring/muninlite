@@ -26,6 +26,7 @@ PLUGINPATTERN="*"
 
 # Remove unwanted plugins from this list
 PLUGINS="@@PLUGINS@@"
+
 # ===== LIB FUNCTIONS =====
 clean_fieldname() {
   echo "$@" | sed -e 's/^[^A-Za-z_]/_/' -e 's/[^A-Za-z0-9_]/_/g'
@@ -123,11 +124,15 @@ done
 # sort plugin names and remove surrounding whitespace
 PLUGINS=$(echo "$RES" | xargs -r -n 1 echo | sort | xargs echo)
 
+# build timeout option if timeout parameter is present. See TIMEOUT_SEC in muninlite.conf
+TIMEOUT_OPT=""
+if [ $TIMEOUT_SEC -gt 0 ]; then TIMEOUT_OPT="-t $TIMEOUT_SEC"; fi
+
 # ===== MAIN LOOP =====
 FUNCTIONS="list nodes config fetch version quit"
 HOSTNAME=$( { hostname -f || hostname || cat /proc/sys/kernel/hostname || echo "unknown"; } 2>/dev/null )
 echo "# munin node at $HOSTNAME"
-while read -r arg0 arg1
+while read $TIMEOUT_OPT -r arg0 arg1
 do
   arg0=$(printf '%s\n' "$arg0" | xargs)
   arg1=$(printf '%s\n' "$arg1" | xargs)
