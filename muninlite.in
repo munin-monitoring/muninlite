@@ -126,7 +126,7 @@ PLUGINS=$(echo "$RES" | xargs -r -n 1 echo | sort | xargs echo)
 
 # build timeout option if timeout parameter is present. See TIMEOUT_SEC in muninlite.conf
 TIMEOUT_OPT=""
-if [ $TIMEOUT_SEC -gt 0 ]; then TIMEOUT_OPT="-t $TIMEOUT_SEC"; fi
+if [ "$TIMEOUT_SEC" -gt 0 ]; then TIMEOUT_OPT="-t $TIMEOUT_SEC"; fi
 
 # ===== MAIN LOOP =====
 FUNCTIONS="list nodes config fetch version quit"
