@@ -19,8 +19,8 @@ config_if() {
   if [ -n "$(which ethtool)" ] && [ -x "$(which ethtool)" ]; then
     MAX_MBPS=$(ethtool "$INTERFACE" 2>/dev/null | grep "Speed: [0-9]\+Mb/s$" | sed 's/[^0-9]//g')
     if [ -n "$MAX_MBPS" ]; then
-      echo "up.max $((MAX_MBPS * 1024 * 1024))"
-      echo "down.max $((MAX_MBPS * 1024 * 1024))"
+      awk -v MAX_MBPS=$MAX_MBPS 'BEGIN { print "up.max", MAX_MBPS * 1024 * 1024 }'
+      awk -v MAX_MBPS=$MAX_MBPS 'BEGIN { print "down.max", MAX_MBPS * 1024 * 1024 }'
     fi
   fi
 }
